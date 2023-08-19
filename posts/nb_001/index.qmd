@@ -1,0 +1,145 @@
+---
+title: "Notebook_001"
+format: html
+---
+
+## Initilize
+
+```{r}
+graphics.off()
+rm(list = ls())
+gc()
+```
+
+## Load Useful Library
+
+```{r}
+library(tidyverse)
+library(scales)
+
+```
+
+
+## Select Dataset
+
+**Hair and Eye Color of Statistics Students**
+
+### Description
+
+Distribution of hair and eye color and sex in 592 statistics students.
+
+### Usage
+
+HairEyeColor
+
+### Format
+
+A 3-dimensional array resulting from cross-tabulating 592 observations on 3 variables. The variables and their levels are as follows:
+
+No	Name	Levels
+1	Hair	Black, Brown, Red, Blond
+2	Eye	Brown, Blue, Hazel, Green
+3	Sex	Male, Female
+
+### Details
+
+The Hair x Eye table comes from a survey of students at the University of Delaware reported by Snee (1974). The split by Sex was added by Friendly (1992a) for didactic purposes.
+
+This data set is useful for illustrating various techniques for the analysis of contingency tables, such as the standard chi-squared test or, more generally, log-linear modelling, and graphical methods such as mosaic plots, sieve diagrams or association plots.
+
+
+
+```{r}
+head(HairEyeColor)
+
+```
+
+try to convert table into data frame using `as.data.frame.table()` or `as.data.frame()` then store into the `df` variable
+
+
+```{r}
+df <- as.data.frame.table(HairEyeColor)
+df
+
+```
+
+```{r}
+df |> 
+  ggplot(aes(x = Eye, y = Freq, fill = Sex, label = Freq)) +
+  geom_col(alpha = 0.8, position = "dodge", show.legend = FALSE) +
+  geom_text(aes(color = Sex, group = Sex), position = position_dodge(width = 1), vjust = -0.1, show.legend = FALSE) +
+  labs(x = "Eye Color", y = "Frequency") +
+  facet_wrap(~ Hair, strip.position = c("right")) +
+  scale_y_continuous(limits = c(0,80), breaks = seq(0,80,20)) +
+  theme_bw()
+
+```
+
+```{r}
+df |> 
+  group_by(Hair) |> 
+  mutate(Chk = max(Freq) == Freq) |> 
+  ggplot(aes(x = Eye, y = Freq, label = Freq, group = Sex)) +
+  geom_col(aes(fill = Chk), color = "white", alpha = 0.8, position = "dodge", show.legend = FALSE) +
+  geom_text(aes(color = Chk, group = Sex), position = position_dodge(width = 1), vjust = -0.1, show.legend = FALSE) +
+  labs(x = "Eye Color", y = "Frequency") +
+  facet_wrap(~ Hair, strip.position = c("right")) +
+  scale_y_continuous(limits = c(0,80), breaks = seq(0,80,20)) +
+  scale_fill_manual(values = c("gray80","coral")) +
+  scale_color_manual(values = c("gray80", "coral")) +
+  theme_bw()
+
+```
+
+
+```{r}
+df |> 
+  filter(Sex == "Male") |> 
+  group_by(Hair) |> 
+  mutate(Ratio = Freq / sum(Freq)) |> 
+  ggplot(aes(x = Eye, y = Freq, fill = Hair, label = Ratio)) +
+  geom_col(alpha = 0.8) +
+  # geom_text(aes(label = paste(round(Ratio*100,1), "%"), color = Hair), vjust = -0.1) +
+  geom_text(aes(label = paste0(scales::percent(round(Ratio,3)),"\n","(",Freq,")"), color = Hair), 
+            vjust = -0.2, hjust = 0.5, show.legend = FALSE) +
+  labs(x = "Eye Color", y = "Frequency") +
+  facet_wrap(~ Hair, strip.position = c("right")) +
+  scale_y_continuous(limits = c(0,80), breaks = seq(0,80,20)) +
+  theme_bw()
+  
+```
+
+```{r}
+df |> 
+  filter(Sex == "Female") |> 
+  ggplot(aes(x = Eye, y = Freq, fill = Hair, label = Freq)) +
+  geom_col(alpha = 0.8) +
+  geom_point(color = "white", size = 4, show.legend = FALSE) +
+  geom_point(aes(color = Hair), size = 2, show.legend = FALSE) +
+  geom_path(aes(group = Hair, color = Hair), lty = 2, linewidth = 1, show.legend = FALSE) +
+  geom_text(aes(color = Hair), vjust = -1.0, show.legend = FALSE) +
+  labs(x = "Eye Color", y = "Frequency") +
+  facet_wrap(~ Hair) +
+  scale_y_continuous(limits = c(0,80), breaks = seq(0,80,20)) +
+  theme_bw()
+
+```
+
+```{r}
+df |> 
+  filter(Sex == "Female") |> 
+  ggplot(aes(x = Eye, y = Freq, fill = Hair, label = Freq)) +
+  geom_col(alpha = 0.8) +
+  geom_point(color = "white", size = 4, show.legend = FALSE) +
+  geom_point(aes(color = Hair), size = 2, show.legend = FALSE) +
+  geom_path(aes(group = Hair, color = Hair), lty = 2, linewidth = 1, show.legend = FALSE) +
+  geom_text(aes(color = Hair), vjust = -1.0, show.legend = FALSE) +
+  labs(title = "Hair and Eye Color of Statistics Students",
+       subtitle = "Distribution of hair and eye color and sex in 592 statistics students.", 
+       x = "Eye Color", y = "Frequency") +
+  facet_wrap(~ Hair) +
+  scale_y_continuous(limits = c(0,80), breaks = seq(0,80,20)) +
+  theme_bw()
+
+```
+
