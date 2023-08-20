@@ -1,5 +1,5 @@
 ---
-title: "Hello! Nice to meet you!"
+title: "About"
 image: profile.jpg
 about:
   template: broadside
@@ -14,6 +14,8 @@ about:
       text: Github
       href: https://github.com
 ---
+
+## Hello! Nice to meet you!
 
 I have been a performance engineer for steam turbines for the past 16 years, and now I am the team leader of a team that provides technical support to customers operating power plants. (If you want to know more about my background as an engineer, please visit my LinkedIn profile.)
 
