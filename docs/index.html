@@ -37,10 +37,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -70,9 +70,9 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-title','listing-author','listing-date','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
-      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description","listing-categories"],
+      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -113,7 +113,7 @@ ul.task-list li input[type="checkbox"] {
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
     <a class="nav-link" href="./about.html">
- <span class="menu-text">About</span></a>
+ <span class="menu-text">Hello! Nice to meet you!</span></a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/"><i class="bi bi-github" role="img">
@@ -164,7 +164,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<div class="quarto-listing quarto-listing-container-grid" id="listing-listing">
+<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="listing-actions-group">
    <div class="input-group input-group-sm quarto-listing-sort">
      <span class="input-group-text"><i class="bi bi-sort-down"></i></span>
@@ -190,17 +190,20 @@ ul.task-list li input[type="checkbox"] {
       <input type="text" class="search form-control" placeholder="Filter">
     </div>
 </div>
-<div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="code,ggplot,visualization" data-listing-date-sort="1692370800000" data-listing-file-modified-sort="1692519899784" data-listing-reading-time-sort="3.705">
-<a href="./posts/nb_001/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="./posts/nb_001/image.png" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-categories="code,ggplot,visualization" data-listing-date-sort="1692370800000" data-listing-file-modified-sort="1692519899784" data-listing-reading-time-sort="3.705">
+<div class="thumbnail">
+<p><a href="./posts/nb_001/index.html"> <img src="./posts/nb_001/image.png" class="thumnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./posts/nb_001/index.html">
+<h3 class="no-anchor listing-title">
 Bar graph with ggplot2
-</h5>
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('code'); return false;">
 code
@@ -212,31 +215,36 @@ ggplot
 visualization
 </div>
 </div>
-<div class="card-text listing-description">
+<a href="./posts/nb_001/index.html">
+<div class="listing-description">
 <strong>Hair and Eye Color of Statistics Students</strong>
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Junho (Sean) Ahn
-</div>
-<div class="listing-date">
-Aug 19, 2023
-</div>
-</div>
-</div>
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="1" data-categories="news,code,analysis" data-listing-date-sort="1692370800000" data-listing-file-modified-sort="1692453286852" data-listing-reading-time-sort="0.045">
-<a href="./posts/post-with-code/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="./posts/post-with-code/image.jpg" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
+<div class="metadata">
+<a href="./posts/nb_001/index.html">
+<div class="listing-date">
+Aug 19, 2023
+</div>
+<div class="listing-author">
+Junho (Sean) Ahn
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="news,code,analysis" data-listing-date-sort="1692370800000" data-listing-file-modified-sort="1692453286852" data-listing-reading-time-sort="0.045">
+<div class="thumbnail">
+<p><a href="./posts/post-with-code/index.html"> <img src="./posts/post-with-code/image.jpg" class="thumnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./posts/post-with-code/index.html">
+<h3 class="no-anchor listing-title">
 Post With Code
-</h5>
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('news'); return false;">
 news
@@ -248,50 +256,57 @@ code
 analysis
 </div>
 </div>
-<div class="card-text listing-description">
+<a href="./posts/post-with-code/index.html">
+<div class="listing-description">
 This is a post with executable code.
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Harlow Malloc
-</div>
-<div class="listing-date">
-Aug 19, 2023
-</div>
-</div>
-</div>
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="2" data-categories="news" data-listing-date-sort="1692111600000" data-listing-file-modified-sort="1692519189305" data-listing-reading-time-sort="0.16">
-<a href="./posts/welcome/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="./posts/welcome/thumbnail.jpg" class="thumbnail-image card-img" style="height: 150px;">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
+<div class="metadata">
+<a href="./posts/post-with-code/index.html">
+<div class="listing-date">
+Aug 19, 2023
+</div>
+<div class="listing-author">
+Harlow Malloc
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="2" data-categories="news" data-listing-date-sort="1692111600000" data-listing-file-modified-sort="1692519189305" data-listing-reading-time-sort="0.16">
+<div class="thumbnail">
+<p><a href="./posts/welcome/index.html"> <img src="./posts/welcome/thumbnail.jpg" class="thumnail-image"> </a></p>
+</div>
+<div class="body">
+<a href="./posts/welcome/index.html">
+<h3 class="no-anchor listing-title">
 Welcome To My Blog
-</h5>
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('news'); return false;">
 news
 </div>
 </div>
-<div class="card-text listing-description">
+<a href="./posts/welcome/index.html">
+<div class="listing-description">
 This is the first post in a Quarto blog. Welcome!
 </div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Tristan O’Malley
+</a>
 </div>
+<div class="metadata">
+<a href="./posts/welcome/index.html">
 <div class="listing-date">
 Aug 16, 2023
 </div>
-</div>
-</div>
+<div class="listing-author">
+Tristan O’Malley
 </div>
 </a>
+</div>
 </div>
 </div>
 <div class="listing-no-matching d-none">
