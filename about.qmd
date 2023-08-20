@@ -1,21 +1,23 @@
 ---
-title: "About"
+title: "Sean Ahn"
 image: profile.jpg
 about:
-  template: broadside
+  template: trestles
+  image-width: 10em
+  image-shape: round
   links:
     - icon: twitter
       text: Twitter
       href: https://twitter.com
     - icon: linkedin
       text: LinkedIn
-      href: www.linkedin.com/in/junho-ahn-engineer
+      href: https://www.linkedin.com/in/junho-ahn-engineer
     - icon: github
       text: Github
       href: https://github.com
 ---
 
-## Hello! Nice to meet you!
+### Hello! Nice to meet you!
 
 I have been a performance engineer for steam turbines for the past 16 years, and now I am the team leader of a team that provides technical support to customers operating power plants. (If you want to know more about my background as an engineer, please visit my LinkedIn profile.)
 

@@ -6,6 +6,8 @@ categories: [code, ggplot, visualization]
 image: "image.png"
 ---
 
+In this blog post, we'll cover how to plot a bar plot with ggplot2. Bar plots are one of the most popular graphs because they can convey meaning simply and intuitively.
+
 ## Initilize
 
 ```{r}
@@ -13,6 +15,12 @@ graphics.off()
 rm(list = ls())
 gc()
 ```
+
+```{r}
+version
+```
+
+
 
 ## Load Useful Library
 
@@ -55,7 +63,7 @@ try to convert table into data frame using `as.data.frame.table()` or `as.data.f
 
 ```{r}
 df <- as.data.frame.table(HairEyeColor)
-df
+df |> head()
 
 ```
 
@@ -117,7 +125,9 @@ df |>
   geom_point(aes(color = Hair), size = 2, show.legend = FALSE) +
   geom_path(aes(group = Hair, color = Hair), lty = 2, linewidth = 1, show.legend = FALSE) +
   geom_text(aes(color = Hair), vjust = -1.0, show.legend = FALSE) +
-  labs(x = "Eye Color", y = "Frequency") +
+  labs(title = "Hair and Eye Color of Statistics Students",
+       subtitle = "Distribution of hair and eye color and sex in 592 statistics students.", 
+       x = "Eye Color", y = "Frequency") +
   facet_wrap(~ Hair) +
   scale_y_continuous(limits = c(0,80), breaks = seq(0,80,20)) +
   theme_bw()
@@ -141,11 +151,8 @@ df |>
   theme_bw()
 
 ```
-```{r}
-ggsave("image.png")
-```
 
-```{r}
-sessionInfo()
+```{r include=FALSE}
+ggsave("image.png")
 ```
 
