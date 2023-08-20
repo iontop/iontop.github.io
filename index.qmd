@@ -1,5 +1,5 @@
 ---
-title: "junho ahn blog"
+title: "Junho (Sean) Ahn"
 listing:
   contents: posts
   sort: "date desc"
