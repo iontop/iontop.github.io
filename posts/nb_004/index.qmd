@@ -1,5 +1,5 @@
 ---
-title: "Area plot with ggplot2"
+title: "Area plot with Nile"
 author: "Junho (Sean) Ahn"
 date: "2023-08-26"
 categories: [ggplot, visualization]
@@ -166,3 +166,7 @@ df1 |>
 ```{r include=FALSE}
 ggsave("image.png")
 ```
+
+<div class="right">
+__END OF POST__
+</div>

@@ -1,5 +1,5 @@
 ---
-title: "Bar graph with ggplot2"
+title: "Bar graph with morley"
 author: "Junho (Sean) Ahn"
 date: "2023-08-26"
 categories: [ggplot, visualization]
@@ -176,3 +176,7 @@ df1 |>
 ```{r include=FALSE}
 ggsave("image.png")
 ```
+
+<div class="right">
+__END OF POST__
+</div>

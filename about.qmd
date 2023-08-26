@@ -25,3 +25,6 @@ As I mentioned earlier, I am a steam turbine engineer and have a background in m
 
 I enjoy analyzing data, which is why I started using R, a statistical language, and am now very interested in data visualization. 
 Most of the data I work with is time series data from power plants, and my main job is to analyze it to find the root cause of issues and suggest solutions, so it's necessary to me to be able to visualize what I need in order to deliver intuitive messages to customers.
+
+To build this blog, I use [Quarto](https://quarto.org) and publish it to [github](https://github.com).
+[Quarto](https://quarto.org) is one of my favorite publishing tool! If you haven't tried it yet, you should give it a try.

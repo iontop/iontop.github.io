@@ -1,5 +1,5 @@
 ---
-title: "Bar graph with ggplot2"
+title: "Bar Plot with HairEyeColor"
 author: "Junho (Sean) Ahn"
 date: "2023-08-19"
 categories: [ggplot, visualization]
@@ -154,3 +154,6 @@ df |>
 ggsave("image.png")
 ```
 
+<div class="right">
+__END OF POST__
+</div>

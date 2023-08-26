@@ -1,5 +1,5 @@
 ---
-title: "Scatter plot with ggplot2"
+title: "Scatter plot with faithful"
 author: "Junho (Sean) Ahn"
 date: "2023-08-26"
 categories: [ggplot, visualization]
@@ -155,3 +155,7 @@ df |>
 ```{r include=FALSE}
 ggsave("image.png")
 ```
+
+<div class="right">
+__END OF POST__
+</div>
