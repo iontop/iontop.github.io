@@ -1,0 +1,168 @@
+---
+title: "Area plot with ggplot2"
+author: "Junho (Sean) Ahn"
+date: "2023-08-26"
+categories: [ggplot, visualization]
+image: "image.png"
+---
+
+## Initializing
+
+```{r}
+graphics.off()
+rm(list = ls())
+gc()
+
+```
+
+```{r}
+version
+```
+
+## Loading Useful Library
+
+```{r}
+library(tidyverse)
+library(tsibble)
+library(gghighlight)
+
+```
+
+## Select Dataset
+
+**Flow of the River Nile**
+
+### Description
+
+Measurements of the annual flow of the river Nile at Aswan (formerly Assuan), 1871–1970, in 10^8 m^3, “with apparent changepoint near 1898” (Cobb(1978), Table 1, p.249).
+
+### Usage
+
+Nile
+
+### Format
+
+A time series of length 100.
+
+### Source
+
+Durbin, J. and Koopman, S. J. (2001). Time Series Analysis by State Space Methods. Oxford University Press. http://www.ssfpack.com/DKbook.html
+
+
+```{r}
+Nile
+
+```
+
+```{r}
+class(Nile)
+
+```
+
+
+The tsibble package provides a data infrastructure for tidy temporal data with wrangling tools. Adapting the tidy data principles, tsibble is a data- and model-oriented object. In tsibble:
+
+1. Index is a variable with inherent ordering from past to present.
+
+2. Key is a set of variables that define observational units over time.
+
+3. Each observation should be uniquely identified by index and key.
+
+4. Each observational unit should be measured at a common interval, if regularly spaced.
+
+
+```{r}
+#coerce ts to tsibble
+df <- as_tsibble(Nile)
+df |> head()
+
+```
+
+```{r}
+class(df)
+```
+
+```{r}
+dim(df)
+```
+
+```{r}
+colnames(df) <- c("year", "flow")
+df |> head()
+```
+
+```{r}
+df |> 
+  ggplot(aes(year, flow)) +
+  geom_line()
+```
+
+```{r}
+df1 <- 
+  df |> 
+  mutate(grp = cut_number(year, 2, labels = FALSE), 
+         lag = difference(flow, default = 0))
+df1
+```
+
+
+```{r}
+df1 |> 
+  ggplot(aes(year)) +
+  geom_area(aes(y = flow), fill = "midnightblue") +
+  geom_area(aes(y = lag), fill = "orange")
+  
+```
+
+```{r}
+df1 |> 
+  ggplot(aes(year)) +
+  geom_area(aes(y = flow), fill = "midnightblue") +
+  geom_area(aes(y = lag), fill = "orange") +
+  facet_wrap(vars(grp), ncol = 1)
+```
+
+```{r}
+grp_status <- c( "1" = "First 50years", "2" = "Second 50years")
+```
+
+
+```{r}
+df1 |> 
+  ggplot(aes(year)) +
+  geom_area(aes(y = flow), fill = "midnightblue") +
+  geom_area(aes(y = lag), fill = "orange") +
+  facet_wrap(vars(grp), ncol = 1, scale = "free_x", labeller = labeller(grp = grp_status))
+```
+
+
+```{r}
+df1 |> 
+  ggplot(aes(year)) +
+  geom_area(aes(y = flow, fill = "Flow")) +
+  geom_area(aes(y = lag, fill = "Lag")) +
+  facet_wrap(vars(grp), ncol = 1, scale = "free_x", labeller = labeller(grp = grp_status)) +
+  scale_fill_manual(name = "Legend", values = c("Flow" = "midnightblue", "Lag" = "orange"))
+
+```
+
+The first 50 years of the 100-year period saw more change, while the second 50 years saw less change.
+
+```{r}
+df1 |> 
+  ggplot(aes(year)) +
+  geom_area(aes(y = flow, fill = "Flow")) +
+  geom_area(aes(y = lag, fill = "Lag")) +
+  facet_wrap(vars(grp), ncol = 1, scale = "free_x", labeller = labeller(grp = grp_status)) +
+  scale_fill_manual(name = "Legend", values = c("Flow" = "midnightblue", "Lag" = "orange")) +
+  labs(title = "Flow of the River Nile", 
+       subtitle = paste0("Measurements of the annual flow of the river Nile at Aswan (formerly Assuan), 1871–1970,","\n" ,"in 10^8 m^3"),
+       x = "Year", y = "Flow (10^8 cu.m)") +
+  theme_bw() + theme(legend.position = "bottom", 
+                     legend.box.background = element_rect(colour = "black"))
+
+```
+
+```{r include=FALSE}
+ggsave("image.png")
+```

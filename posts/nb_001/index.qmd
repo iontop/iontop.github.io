@@ -2,7 +2,7 @@
 title: "Bar graph with ggplot2"
 author: "Junho (Sean) Ahn"
 date: "2023-08-19"
-categories: [code, ggplot, visualization]
+categories: [ggplot, visualization]
 image: "image.png"
 ---
 
@@ -19,8 +19,6 @@ gc()
 ```{r}
 version
 ```
-
-
 
 ## Load Useful Library
 

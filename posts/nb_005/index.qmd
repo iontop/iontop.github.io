@@ -1,0 +1,155 @@
+---
+title: "Box plot with ggplot2"
+author: "Junho (Sean) Ahn"
+date: "2023-08-26"
+categories: [ggplot, visualization]
+image: "image.png"
+---
+
+## Initializing
+
+```{r}
+graphics.off()
+rm(list = ls())
+gc()
+
+```
+
+```{r}
+version
+```
+
+## Loading Useful Library
+
+```{r}
+library(tidyverse)
+library(tsibble)
+library(gghighlight)
+
+```
+
+## Select Dataset
+
+**The Effect of Vitamin C on Tooth Growth in Guinea Pigs**
+
+### Description
+
+The response is the length of odontoblasts (cells responsible for tooth growth) in 60 guinea pigs. Each animal received one of three dose levels of vitamin C (0.5, 1, and 2 mg/day) by one of two delivery methods, orange juice or ascorbic acid (a form of vitamin C and coded as VC).
+
+### Usage
+
+ToothGrowth
+
+### Format
+
+A data frame with 60 observations on 3 variables.
+
+[,1]	len	numeric	Tooth length
+[,2]	supp	factor	Supplement type (VC or OJ).
+[,3]	dose	numeric	Dose in milligrams/day
+
+```{r}
+ToothGrowth |> head()
+```
+
+```{r}
+ToothGrowth |> class()
+```
+
+```{r}
+ToothGrowth |> dim()
+```
+
+## Visualization
+
+```{r}
+df <- ToothGrowth
+df |> head()
+```
+
+```{r}
+df |> 
+  ggplot(aes(supp, len)) +
+  geom_point()
+```
+
+```{r}
+df |> 
+  ggplot(aes(supp, len)) +
+  geom_boxplot(alpha = 0.5) +
+  geom_point()
+```
+
+```{r}
+df |> 
+  ggplot(aes(supp, len, color = supp)) +
+  geom_boxplot(alpha = 0.5, show.legend = FALSE) +
+  geom_point()
+```
+
+```{r}
+df |> 
+  ggplot(aes(supp, len, color = supp)) +
+  geom_boxplot(alpha = 0.5, show.legend = FALSE) +
+  geom_jitter(alpha = 0.7, width = 0.2)
+```
+
+The standard error is just the standard deviation divided by the square root of the sample size. So you can easily make your own function:
+
+```{r}
+df1 <- 
+  df |> 
+  group_by(supp) |> 
+  mutate(min = min(len), max = max(len))
+```
+
+```{r}
+df1 |> 
+  ggplot(aes(supp, len, color = supp)) +
+  geom_boxplot(alpha = 0.5, show.legend = FALSE) +
+  geom_errorbar(aes(ymin = min, ymax = max), alpha = 0.5) +
+  geom_jitter(alpha = 0.7, width = 0.2)
+
+```
+
+```{r}
+df2 <- 
+  df |> 
+  group_by(supp, dose) |> 
+  mutate(min = min(len), max = max(len))
+```
+
+
+```{r}
+df2 |> 
+  ggplot(aes(supp, len, color = supp)) +
+  geom_boxplot(alpha = 0.5, show.legend = FALSE) +
+  geom_errorbar(aes(ymin = min, ymax = max), alpha = 0.5) +
+  geom_jitter(alpha = 0.7, width = 0.2) +
+  facet_wrap(vars(dose))
+
+```
+
+```{r}
+dose_status <- c("0.5" = "0.5mg/day", "1" = "1.0mg/day", "2" = "2.0mg/day")
+```
+
+
+```{r}
+df2 |> 
+  ggplot(aes(supp, len, color = supp)) +
+  geom_boxplot(alpha = 0.5, show.legend = FALSE) +
+  geom_errorbar(aes(ymin = min, ymax = max), alpha = 0.5) +
+  geom_jitter(alpha = 0.7, width = 0.2) +
+  facet_wrap(vars(dose), labeller = labeller(dose = dose_status)) +
+  labs(title = "The Effect of Vitamin C on Tooth Growth in Guinea Pigs",
+       subtitle = paste0("The response is the length of odontoblasts (cells responsible for tooth growth) in 60 guinea pigs.","\n", 
+                         "Each animal received one of three dose levels of vitamin C (0.5, 1, and 2 mg/day)","\n",
+                         "by one of two delivery methods, orange juice or ascorbic acid (a form of vitamin C and coded as VC)."),
+       x = "Supplement type", y = "Tooth length", color = "Supplement type") +
+  theme_bw() + theme(legend.position = "bottom")
+```
+
+```{r include=FALSE}
+ggsave("image.png")
+```

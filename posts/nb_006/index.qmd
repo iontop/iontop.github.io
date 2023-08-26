@@ -1,0 +1,185 @@
+---
+title: "Line plot with ggplot2"
+author: "Junho (Sean) Ahn"
+date: "2023-08-26"
+categories: [ggplot, visualization]
+image: "image.png"
+---
+
+## Initializing
+
+```{r}
+graphics.off()
+rm(list = ls())
+gc()
+
+```
+
+```{r}
+version
+```
+
+## Loading Useful Library
+
+```{r}
+library(tidyverse)
+
+```
+
+## Select Dataset
+
+**Carbon Dioxide Uptake in Grass Plants**
+
+### Description
+The CO2 data frame has 84 rows and 5 columns of data from an experiment on the cold tolerance of the grass species Echinochloa crus-galli.
+
+### Usage
+CO2
+
+### Format
+An object of class c("nfnGroupedData", "nfGroupedData", "groupedData", "data.frame") containing the following columns:
+
+Plant
+an ordered factor with levels Qn1 < Qn2 < Qn3 < ... < Mc1 giving a unique identifier for each plant.
+
+Type
+a factor with levels Quebec Mississippi giving the origin of the plant
+
+Treatment
+a factor with levels nonchilled chilled
+
+conc
+a numeric vector of ambient carbon dioxide concentrations (mL/L).
+
+uptake
+a numeric vector of carbon dioxide uptake rates ($\mu$mol/$m^2$sec).
+
+### Details
+The $CO_2$ uptake of six plants from Quebec and six plants from Mississippi was measured at several levels of ambient $CO_2$ concentration. Half the plants of each type were chilled overnight before the experiment was conducted.
+
+This dataset was originally part of package nlme, and that has methods (including for [, as.data.frame, plot and print) for its grouped-data classes.
+
+```{r}
+CO2 |> head()
+```
+
+```{r}
+CO2 |> class()
+```
+
+```{r}
+CO2 |> dim()
+```
+
+## Visualization
+
+```{r}
+unique(CO2[,1:3])
+```
+
+```{r}
+plot(CO2)
+```
+
+```{r}
+CO2 |> 
+  ggplot(aes(conc, uptake)) +
+  geom_point()
+
+```
+
+```{r}
+CO2 |> 
+  ggplot(aes(conc, uptake)) +
+  geom_path() +
+  geom_point(shape = 21, fill = "white", color = "black") +
+  facet_wrap(vars(Plant), nrow = 1)
+```
+
+```{r}
+CO2 |> 
+  ggplot(aes(conc, uptake, color = Plant)) +
+  geom_path(show.legend = FALSE) +
+  geom_point(aes(color = Plant), shape = 21, fill = "white", show.legend = FALSE) +
+  facet_wrap(vars(Plant), nrow = 1) +
+  scale_x_continuous(limits = c(0,1200), breaks = seq(0,1200,400)) +
+  labs(title = "Carbon Dioxide Uptake in Grass Plants",
+       subtitle = paste0("The CO2 data frame has 84 rows and 5 columns of data from an experiment on the cold tolerance","\n" ,
+                         "of the grass species Echinochloa crus-galli."),
+       x = "Ambient carbon dioxide concentrations (mL/L)",
+       y = "Carbon dioxide uptake rates (umol/sq.m sec)",
+       color = "Legend") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))
+```
+
+
+```{r}
+CO2 |> 
+  ggplot(aes(conc, uptake, group = Plant, label = Plant)) +
+  # path color sets by color name then determine color in scale_color_manual()
+  geom_path(data = subset(CO2, Plant != "Mn1"), aes(color = "Others"), linewidth = 1, lty = 2) +
+  geom_path(data = subset(CO2, Plant == "Mn1"), aes(color = "Mn1"), linewidth = 1, lty = 1) +
+  # point color determines in geom_point() directly
+  geom_point(data = subset(CO2, Plant != "Mn1"), shape = 21, fill = "white", color = "gray") +
+  geom_point(data = subset(CO2, Plant == "Mn1"), shape = 21, fill = "white", color = "coral") +
+  scale_color_manual(values = c("Others" = "gray80","Mn1" = "coral")) +
+  labs(title = "Carbon Dioxide Uptake in Grass Plants",
+       subtitle = paste0("The CO2 data frame has 84 rows and 5 columns of data from an experiment on the cold tolerance","\n" ,
+                         "of the grass species Echinochloa crus-galli."),
+       x = "Ambient carbon dioxide concentrations (mL/L)",
+       y = "Carbon dioxide uptake rates (umol/sq.m sec)",
+       color = "Legend") +
+  theme_bw() + 
+  theme(legend.position = c(0.9, 0.15), # Caution!!! it is relative position ex) 0: left end ~ 1: right end
+        legend.background = element_rect(fill = "white"),
+        legend.box.background = element_rect(color = "black"))
+```
+
+
+```{r}
+df <- 
+  CO2 |> 
+  mutate(category = case_when(str_detect(Plant, "Qn") ~ "Qn",
+                              str_detect(Plant, "Qc") ~ "Qc",
+                              str_detect(Plant, "Mn") ~ "Mn",
+                              str_detect(Plant, "Mc") ~ "Mc",
+                              .default = "Unknown"))
+df |> head()
+```
+
+```{r}
+df |> 
+  ggplot(aes(conc, uptake, color = Plant)) +
+  geom_path(show.legend = FALSE) +
+  geom_point(aes(color = Plant), shape = 21, fill = "white", show.legend = FALSE) +
+  facet_wrap(vars(category), nrow = 1) +
+  labs(title = "Carbon Dioxide Uptake in Grass Plants",
+       subtitle = paste0("The CO2 data frame has 84 rows and 5 columns of data from an experiment on the cold tolerance","\n" ,
+                         "of the grass species Echinochloa crus-galli."),
+       x = "Ambient carbon dioxide concentrations (mL/L)",
+       y = "Carbon dioxide uptake rates (umol/sq.m sec)",
+       color = "Legend") +
+  theme_bw()
+```
+
+
+```{r}
+df |> 
+  ggplot(aes(conc, uptake, color = Plant)) +
+  geom_path(show.legend = FALSE) +
+  geom_point(aes(color = Plant), shape = 21, fill = "white", show.legend = FALSE) +
+  facet_wrap(vars(category, Plant), ncol = 4, dir = "v", labeller = labeller(.multi_line = FALSE)) +
+  labs(title = "Carbon Dioxide Uptake in Grass Plants",
+       subtitle = paste0("The CO2 data frame has 84 rows and 5 columns of data from an experiment on the cold tolerance","\n" ,
+                         "of the grass species Echinochloa crus-galli."),
+       x = "Ambient carbon dioxide concentrations (mL/L)",
+       y = "Carbon dioxide uptake rates (umol/sq.m sec)",
+       color = "Legend") +
+  theme_bw()
+```
+
+
+```{r include=FALSE}
+ggsave("image.png")
+```

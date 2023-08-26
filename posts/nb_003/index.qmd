@@ -1,0 +1,157 @@
+---
+title: "Scatter plot with ggplot2"
+author: "Junho (Sean) Ahn"
+date: "2023-08-26"
+categories: [ggplot, visualization]
+image: "image.png"
+---
+
+## Initilizing
+
+```{r}
+graphics.off()
+rm(list = ls())
+gc()
+
+```
+
+```{r}
+version
+```
+
+## Loading Useful Library
+
+```{r}
+library(tidyverse)
+
+```
+
+## Select Dataset
+
+**Old Faithful Geyser Data**
+
+### Description
+
+Waiting time between eruptions and the duration of the eruption for the Old Faithful geyser in Yellowstone National Park, Wyoming, USA.
+
+### Usage
+
+faithful
+
+### Format
+
+A data frame with 272 observations on 2 variables.
+
+[,1]	eruptions	numeric	Eruption time in mins
+[,2]	waiting	numeric	Waiting time to next eruption (in mins)
+
+### Details
+
+A closer look at faithful$eruptions reveals that these are heavily rounded times originally in seconds, where multiples of 5 are more frequent than expected under non-human measurement. For a better version of the eruption times, see the example below.
+
+There are many versions of this dataset around: Azzalini and Bowman (1990) use a more complete version.
+
+
+```{r}
+faithful |> head()
+
+```
+
+```{r}
+class(faithful)
+
+```
+
+```{r}
+dim(faithful)
+
+```
+
+
+```{r}
+df <- faithful
+
+```
+
+```{r}
+df |> 
+  ggplot(aes(waiting, eruptions)) +
+  geom_point()
+```
+
+```{r}
+df |> 
+  ggplot(aes(waiting, eruptions, color = waiting)) +
+  geom_point()
+
+```
+
+```{r}
+df |> 
+  mutate(waitLv = cut_number(waiting, 4)) |> 
+  ggplot(aes(waiting, eruptions, color = waitLv)) +
+  geom_point()
+
+```
+
+
+
+```{r}
+# Calculate slope and intercept of line of best fit
+linear <- lm(eruptions ~ waiting, data = faithful)
+linear
+```
+
+```{r}
+linear$coefficients[1]
+i <- linear$coefficients[1]
+
+```
+
+```{r}
+linear$coefficients[2]
+s <- linear$coefficients[2]
+
+```
+
+
+```{r}
+df |> 
+  mutate(waitLv = cut_number(waiting, 4)) |> 
+  ggplot(aes(waiting, eruptions, color = waitLv)) +
+  geom_point() +
+  geom_abline(intercept = i, slope = s)
+
+```
+
+```{r}
+df |> 
+  mutate(waitLv = cut_number(waiting, 4)) |> 
+  ggplot(aes(waiting, eruptions)) + # Should remove "aes(color = waitLv)" in ggplot()
+  geom_point(aes(color = waitLv)) +
+  geom_smooth(method = lm ,se = FALSE, color = "black", linewidth = 0.5) # BUT!! to extract equation you should using "lm()"
+
+```
+
+
+
+```{r}
+df |> 
+  mutate(waitLv = cut_number(waiting, 4)) |> 
+  ggplot(aes(waiting, eruptions, color = waitLv)) +
+  geom_point() +
+  geom_abline(intercept = i, slope = s, color = "blue", lty = 2) +
+  annotate("text",x = 50, y = 4.5, label = paste0("y = ", round(s,5) ,"x +",round(i,5))) +
+  labs(title = "Old Faithful geyser",
+       subtitle = paste0("Waiting time between eruptions and the duration of the eruption for the Old Faithful geyser","\n",
+                         "in Yellowstone National Park, Wyoming, USA."),
+       x = "Waiting time to next eruption (min)", y = "Eruption time (min)", color = "Lv. of Wating Time") +
+  theme_bw() +
+  theme(legend.position = "bottom")
+
+```
+
+
+```{r include=FALSE}
+ggsave("image.png")
+```
