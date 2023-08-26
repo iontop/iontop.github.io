@@ -209,14 +209,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="initilizing" class="level2">
 <h2 class="anchored" data-anchor-id="initilizing">Initilizing</h2>
+<p>I usually use the following code for initialization. If you don’t want to remove plots and/or variables, you can skip it.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">graphics.off</span>()</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)
-Ncells  575887 30.8    1310691   70         NA   669400 35.8
-Vcells 1050724  8.1    8388608   64      16384  1851626 14.2</code></pre>
+Ncells  578398 30.9    1317862 70.4         NA   669405 35.8
+Vcells 1055709  8.1    8388608 64.0      16384  1851688 14.2</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -242,6 +243,7 @@ nickname       Beagle Scouts               </code></pre>
 </section>
 <section id="loading-useful-library" class="level2">
 <h2 class="anchored" data-anchor-id="loading-useful-library">Loading Useful Library</h2>
+<p>We want to use as few packages (some might call them “libraries”) as possible. If possible, I’m going to use only the <strong>tidyverse</strong> package. <a href="https://www.tidyverse.org">Tidyverse</a> is one of the most famous packages in R programming, and it’s really powerful and useful.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -260,6 +262,9 @@ nickname       Beagle Scouts               </code></pre>
 </section>
 <section id="select-dataset" class="level2">
 <h2 class="anchored" data-anchor-id="select-dataset">Select Dataset</h2>
+<p>When I write posts in my blog, I use the built-in dataset because I don’t want the reader to suffer by having to find the data from somewhere else.</p>
+<p>The dataset I’ll be using in this post is shown below ⬇️ .</p>
+<p><br></p>
 <p><strong>Old Faithful Geyser Data</strong></p>
 <section id="description" class="level3">
 <h3 class="anchored" data-anchor-id="description">Description</h3>

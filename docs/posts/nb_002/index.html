@@ -9,7 +9,7 @@
 <meta name="author" content="Junho (Sean) Ahn">
 <meta name="dcterms.date" content="2023-08-26">
 
-<title>:: blog :: - Bar graph with morley</title>
+<title>:: blog :: - Bar Plot with morley</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -168,7 +168,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Bar graph with morley</h1>
+      <h1 class="title">Bar Plot with morley</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">ggplot</div>
                 <div class="quarto-category">visualization</div>
@@ -207,16 +207,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
+<p>In this post we will plot a bar histogram using data from the Michelson experiment and discuss what colours should be used for colourblind people when plotting a bar histogram. The plots we will create will be visible to colourblind people, so it is important that we visualise them using colours that are easily recognisable by everyone.</p>
 <section id="initializing" class="level2">
 <h2 class="anchored" data-anchor-id="initializing">Initializing</h2>
+<p>I usually use the following code for initialization. If you don’t want to remove plots and/or variables, you can skip it.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">graphics.off</span>()</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)
-Ncells  575892 30.8    1310705   70         NA   669400 35.8
-Vcells 1051411  8.1    8388608   64      16384  1851626 14.2</code></pre>
+Ncells  578405 30.9    1317882 70.4         NA   669405 35.8
+Vcells 1056665  8.1    8388608 64.0      16384  1851688 14.2</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -242,6 +244,8 @@ nickname       Beagle Scouts               </code></pre>
 </section>
 <section id="loading-useful-library" class="level2">
 <h2 class="anchored" data-anchor-id="loading-useful-library">Loading useful library</h2>
+<p>We want to use as few packages (some might call them “libraries”) as possible. If possible, I’m going to use only the <strong>tidyverse</strong> package. <a href="https://www.tidyverse.org">Tidyverse</a> is one of the most famous packages in R programming, and it’s really powerful and useful.</p>
+<p><a href="https://scales.r-lib.org">sclales</a> is a popular package in R that helps you convert values easily. It is also compatible with ggplot, which is a great help for visualization.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -273,6 +277,9 @@ The following object is masked from 'package:readr':
 </section>
 <section id="select-dataset" class="level2">
 <h2 class="anchored" data-anchor-id="select-dataset">Select Dataset</h2>
+<p>When I write posts in my blog, I use the built-in dataset because I don’t want the reader to suffer by having to find the data from somewhere else.</p>
+<p>The dataset I’ll be using in this post is shown below ⬇️ .</p>
+<p><br></p>
 <p><strong>Michelson Speed of Light Data</strong></p>
 <section id="description" class="level3">
 <h3 class="anchored" data-anchor-id="description">Description</h3>

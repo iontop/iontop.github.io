@@ -8,6 +8,8 @@ image: "image.png"
 
 ## Initializing
 
+I usually use the following code for initialization. If you don't want to remove plots and/or variables, you can skip it.
+
 ```{r}
 graphics.off()
 rm(list = ls())
@@ -21,6 +23,8 @@ version
 
 ## Loading Useful Library
 
+We want to use as few packages (some might call them "libraries") as possible. If possible, I'm going to use only the **tidyverse** package. [Tidyverse](https://www.tidyverse.org) is one of the most famous packages in R programming, and it's really powerful and useful.
+
 ```{r}
 library(tidyverse)
 library(tsibble)
@@ -29,6 +33,12 @@ library(gghighlight)
 ```
 
 ## Select Dataset
+
+When I write posts in my blog, I use the built-in dataset because I don't want the reader to suffer by having to find the data from somewhere else.
+
+The dataset I'll be using in this post is shown below `r emo::ji("down_arrow")` .
+
+<br>
 
 **The Effect of Vitamin C on Tooth Growth in Guinea Pigs**
 
