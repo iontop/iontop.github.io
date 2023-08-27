@@ -217,8 +217,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)
-Ncells  733334 39.2    1272455   68         NA  1272455 68.0
-Vcells 1297552  9.9    8388608   64      16384  1908739 14.6</code></pre>
+Ncells  733335 39.2    1272455   68         NA  1272455 68.0
+Vcells 1297563  9.9    8388608   64      16384  1908750 14.6</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -351,7 +351,10 @@ Hair    Brown Blue Hazel Green
 6 Brown  Blue Male   50</code></pre>
 </div>
 </div>
-<p><br></p>
+</section>
+</section>
+<section id="visualization" class="level2">
+<h2 class="anchored" data-anchor-id="visualization">Visualization</h2>
 <p>If you were to draw a bar plot to visualize a dataset such as HairEyeColor, you would probably draw a plot like the one below.</p>
 <p>I’ve plotted a bar plot with men and women represented by different colors and separated by hair color using <code>facet_wrap()</code>.</p>
 <p>If we just plotted a bar plot, it would be hard to tell the exact values, so we used <code>geom_text()</code> to display the values above each bar. If you want to use <code>geom_text()</code> to display the values, be sure to write <strong>label = “the value you want to display”</strong> in <code>aes()</code> of <code>ggplot()</code>.</p>
@@ -428,7 +431,7 @@ Tip
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>As you can see, when we draw a point, we draw two points for one value. This is to make it look better, so we draw one point large in white and the other small in the same color as the bar. This work makes the distinction between a bar and a point clearer and helps the reader understand the trend of the line more easily.</p>
+<p>As you can see, when I draw a point, I draw two points for one value. This is to make it look better, so I draw one large point in white and the other smaller one in the same color as the bar. This work makes the distinction between a bar and a point clearer and helps the reader understand the trend of the line more easily.</p>
 </div>
 </div>
 <div class="cell">
@@ -456,7 +459,6 @@ Tip
 </div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

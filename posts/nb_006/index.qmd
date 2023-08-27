@@ -1,6 +1,6 @@
 ---
 title: "Line plot with CO2"
-author: "Junho (Sean) Ahn"
+author: Sean Ahn [`r emo::ji("e-mail")`](mailto:junho.ahn@gmail.com)
 date: "2023-08-26"
 categories: [ggplot, visualization]
 image: "image.png"

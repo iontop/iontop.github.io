@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Junho (Sean) Ahn">
+<meta name="author" content="Sean Ahn 📧">
 <meta name="dcterms.date" content="2023-08-26">
 
 <title>:: blog :: - Bar Plot with morley</title>
@@ -182,7 +182,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p>Junho (Sean) Ahn </p>
+               <p>Sean Ahn <a href="mailto:junho.ahn@gmail.com">📧</a> </p>
             </div>
     </div>
       
@@ -207,7 +207,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
-<p>In this post we will plot a bar histogram using data from the Michelson experiment and discuss what colours should be used for colourblind people when plotting a bar histogram. The plots we will create will be visible to colourblind people, so it is important that we visualise them using colours that are easily recognisable by everyone.</p>
+<p>In this post we will plot a bar histogram using data from the Michelson experiment and discuss what colors should be used for colorblind people when plotting a bar histogram. The plots we will create will be visible to colorblind people, so it is important that we visualize them using colors that are easily recognizable by everyone.</p>
 <section id="initializing" class="level2">
 <h2 class="anchored" data-anchor-id="initializing">Initializing</h2>
 <p>I usually use the following code for initialization. If you don’t want to remove plots and/or variables, you can skip it.</p>
@@ -217,8 +217,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)
-Ncells  578405 30.9    1317882 70.4         NA   669405 35.8
-Vcells 1056665  8.1    8388608 64.0      16384  1851688 14.2</code></pre>
+Ncells  733840 39.2    1273155   68         NA  1273155 68.0
+Vcells 1298839 10.0    8388608   64      16384  1868910 14.3</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -299,6 +299,10 @@ The following object is masked from 'package:readr':
 <section id="details" class="level3">
 <h3 class="anchored" data-anchor-id="details">Details</h3>
 <p>The data is here viewed as a randomized block experiment with ‘experiment’ and ‘run’ as the factors. ‘run’ may also be considered a quantitative variate to account for linear (or polynomial) changes in the measurement over the course of a single experiment.</p>
+<p><br></p>
+<p>all right! ready to go?</p>
+<p>I took a look dataset with <code>head()</code> function. actually I used <code>%&gt;%</code> pipe operator before, but now I use <code>|&gt;</code> pipe operator.</p>
+<p>Maybe <a href="https://stackoverflow.com/questions/67633022/what-are-the-differences-between-rs-new-native-pipe-and-the-magrittr-pipe">stackoverflow article</a> will be helpful to understand both pipe operator.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>morley <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -311,18 +315,27 @@ The following object is masked from 'package:readr':
 006    1   6   850</code></pre>
 </div>
 </div>
+<p><br></p>
+<p>I wanna find out <code>morley</code> attribute. as you can see, <code>morley</code> dataset is data frame object.</p>
+<p>so I don’t need to change attribute.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(morley)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "data.frame"</code></pre>
 </div>
 </div>
+<p><br></p>
+<p>and using <code>dim()</code> function, I checked how big <code>morley</code> dataset is.</p>
+<p><code>morley</code> is tiny dataset having only 100 rows with 3 column 😁.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(morley)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 100   3</code></pre>
 </div>
 </div>
+<p><br></p>
+<p>First, group the <code>morley</code> dataset by experiment (Expt) using <code>group_by()</code> and then use the <code>summarise()</code> function to average the speed of light measured in each experiment.</p>
+<p>It then stores the result in the <code>df1</code> variable.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> morley <span class="sc">|&gt;</span> <span class="fu">group_by</span>(Expt) <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="at">Avg =</span> <span class="fu">mean</span>(Speed))</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>df1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -337,6 +350,14 @@ The following object is masked from 'package:readr':
 5     5  832.</code></pre>
 </div>
 </div>
+</section>
+</section>
+<section id="visualization" class="level2">
+<h2 class="anchored" data-anchor-id="visualization">Visualization</h2>
+<p>You have created a simple bar plot as shown below.</p>
+<p>I can’t see any difference between the five experimental results, all of which are above 750 and around 850.</p>
+<p>Since I can’t clearly see the difference in the plot, I need to adjust the scale of the y-axis so that I can see the difference between the experimental values.</p>
+<p>Moreover, I can’t distinguish which bar stand for which experiment because all bar is gray color.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="sc">|&gt;</span> </span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Expt, Avg)) <span class="sc">+</span></span>
@@ -345,6 +366,9 @@ The following object is masked from 'package:readr':
 <p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p><br></p>
+<p>Here you are.</p>
+<p>I colored each bar according to the experiment number. One thing to note is that the experiment number is recognized as an integer in the dataset, so if you want to color each one differently, you need to use the <code>as.factor()</code> function to make sure it is recognized as a factor and not an integer.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="sc">|&gt;</span> </span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Expt, Avg, <span class="at">fill=</span><span class="fu">as.factor</span>(Expt))) <span class="sc">+</span></span>
@@ -353,9 +377,26 @@ The following object is masked from 'package:readr':
 <p><img src="index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p><br></p>
 <p>A number of color palettes have been developed with the intention of being accessible to people who are colorblind. Three of them appear below, from the <a href="https://lospec.com/palette-list/ibm-color-blind-safe">IBM Design Library</a>, Bang Wong, and Paul Tol respectively. Click on any of them to load it into the color palette selection tool above.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p><strong>IBM Color Blind Safe Palette</strong></p>
 <p>“#648fff”, “#785ef0”, “#dc267f”, “#fe6100”, “#ffb000”, “#000000”, “#ffffff”</p>
+</div>
+</div>
+<p>In my case, I made variable then store color for colorblind.</p>
+<p>It’s a very good practice to have these colors predefined for people with color blindness when creating visualizations.</p>
+<p><strong>I highly recommend it.</strong> Alternatively, <a href="https://thenode.biologists.com/data-visualization-with-flying-colors/research/#:~:text=Color%20blind%20friendly%20palettes%20Masataka%20Okabe%20and%20Kei,that%20is%20unambiguous%20both%20to%20colorblinds%20and%20non-colorblinds”.">okabe-ito</a> can achieve the same effect and is easy to use by installing the package.</p>
+<p>When you want to use okabe-ito palette in ggplot, you can use <a href="https://malcolmbarrett.github.io/ggokabeito/">ggokabeito</a>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>IBMColor <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#648fff"</span>, <span class="st">"#785ef0"</span>, <span class="st">"#dc267f"</span>, <span class="st">"#fe6100"</span>, <span class="st">"#ffb000"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -368,6 +409,10 @@ The following object is masked from 'package:readr':
 <p><img src="index_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p><br></p>
+<p>Now, I try to zoom the plot to distinguish differences among the experiments.</p>
+<p>for zooming, I set <code>limits</code> and <code>breaks</code> in <code>sclae_y_continuous()</code>.</p>
+<p>However, I can’t see anything 😮.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="sc">|&gt;</span> </span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Expt, Avg, <span class="at">fill=</span><span class="fu">as.factor</span>(Expt))) <span class="sc">+</span></span>
@@ -381,6 +426,10 @@ The following object is masked from 'package:readr':
 <p><img src="index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p><br></p>
+<p>that because, I didn’t set proper coordinate system.</p>
+<p>when I zoom in or zoom out the plot, I should be careful coordinate system.</p>
+<p>if I set wrong coordinate system, data would clip (remove unseen data points).</p>
 <p>If the purpose is to zoom, use the limit argument in the coordinate system (see <a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html">coord_cartesian()</a>).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="sc">|&gt;</span> </span>
@@ -393,6 +442,7 @@ The following object is masked from 'package:readr':
 <p><img src="index_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p><br></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="sc">|&gt;</span> </span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Expt, Avg, <span class="at">fill=</span><span class="fu">as.factor</span>(Expt))) <span class="sc">+</span></span>
@@ -405,6 +455,7 @@ The following object is masked from 'package:readr':
 <p><img src="index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p><br></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="sc">|&gt;</span> </span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Expt, Avg, <span class="at">fill=</span><span class="fu">as.factor</span>(Expt), <span class="at">label =</span> Avg)) <span class="sc">+</span></span>
@@ -419,6 +470,7 @@ The following object is masked from 'package:readr':
 <p><img src="index_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p><br></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="sc">|&gt;</span> </span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Expt, Avg, <span class="at">fill=</span><span class="fu">as.factor</span>(Expt), <span class="at">label =</span> Avg)) <span class="sc">+</span></span>
@@ -442,7 +494,6 @@ The following object is masked from 'package:readr':
 </div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

@@ -1,12 +1,12 @@
 ---
 title: "Bar Plot with morley"
-author: "Junho (Sean) Ahn"
+author: Sean Ahn [`r emo::ji("e-mail")`](mailto:junho.ahn@gmail.com)
 date: "2023-08-26"
 categories: [ggplot, visualization]
 image: "image.png"
 ---
 
-In this post we will plot a bar histogram using data from the Michelson experiment and discuss what colours should be used for colourblind people when plotting a bar histogram. The plots we will create will be visible to colourblind people, so it is important that we visualise them using colours that are easily recognisable by everyone.
+In this post we will plot a bar histogram using data from the Michelson experiment and discuss what colors should be used for colorblind people when plotting a bar histogram. The plots we will create will be visible to colorblind people, so it is important that we visualize them using colors that are easily recognizable by everyone.
 
 ## Initializing
 
@@ -71,27 +71,63 @@ Speed-of-light measurement.
 
 The data is here viewed as a randomized block experiment with ‘experiment’ and ‘run’ as the factors. ‘run’ may also be considered a quantitative variate to account for linear (or polynomial) changes in the measurement over the course of a single experiment.
 
+<br>
+
+all right! ready to go?  
+
+I took a look dataset with `head()` function. actually I used `%>%` pipe operator before, but now I use `|>` pipe operator.
+
+Maybe [stackoverflow article](https://stackoverflow.com/questions/67633022/what-are-the-differences-between-rs-new-native-pipe-and-the-magrittr-pipe) will be helpful to understand both pipe operator.  
 
 ```{r}
 morley |> head()
 
 ```
 
+<br>
+
+I wanna find out `morley` attribute. as you can see, `morley` dataset is data frame object.  
+
+so I don't need to change attribute. 
+
+
 ```{r}
 class(morley)
 
 ```
+
+<br>
+
+and using `dim()` function, I checked how big `morley` dataset is.  
+
+`morley` is tiny dataset having only 100 rows with 3 column `r emo::ji("grin")`. 
 
 ```{r}
 dim(morley)
 
 ```
 
+<br>
+
+First, group the `morley` dataset by experiment (Expt) using `group_by()` and then use the `summarise()` function to average the speed of light measured in each experiment. 
+
+It then stores the result in the `df1` variable.   
+
 ```{r}
 df1 <- morley |> group_by(Expt) |> summarise(Avg = mean(Speed))
 df1
 
 ```
+
+## Visualization 
+
+You have created a simple bar plot as shown below.  
+
+I can't see any difference between the five experimental results, all of which are above 750 and around 850.  
+
+Since I can't clearly see the difference in the plot, I need to adjust the scale of the y-axis so that I can see the difference between the experimental values.
+
+Moreover, I can't distinguish which bar stand for which experiment because all bar is gray color.
 
 ```{r}
 df1 |> 
@@ -100,6 +136,12 @@ df1 |>
 
 ```
 
+<br>
+
+Here you are. 
+
+I colored each bar according to the experiment number. One thing to note is that the experiment number is recognized as an integer in the dataset, so if you want to color each one differently, you need to use the `as.factor()` function to make sure it is recognized as a factor and not an integer.  
+
 ```{r}
 df1 |> 
   ggplot(aes(Expt, Avg, fill=as.factor(Expt))) +
@@ -107,12 +149,24 @@ df1 |>
 
 ```
 
+<br>
 
 A number of color palettes have been developed with the intention of being accessible to people who are colorblind. Three of them appear below, from the [IBM Design Library](https://lospec.com/palette-list/ibm-color-blind-safe), Bang Wong, and Paul Tol respectively. Click on any of them to load it into the color palette selection tool above.
 
+:::callout-note
 **IBM Color Blind Safe Palette**
 
 "#648fff", "#785ef0", "#dc267f", "#fe6100", "#ffb000", "#000000", "#ffffff"
+:::
+
+In my case, I made variable then store color for colorblind.  
+
+It's a very good practice to have these colors predefined for people with color blindness when creating visualizations. 
+
+**I highly recommend it.** Alternatively, [okabe-ito](https://thenode.biologists.com/data-visualization-with-flying-colors/research/#:~:text=Color%20blind%20friendly%20palettes%20Masataka%20Okabe%20and%20Kei,that%20is%20unambiguous%20both%20to%20colorblinds%20and%20non-colorblinds”.) can achieve the same effect and is easy to use by installing the package.
+
+When you want to use okabe-ito palette in ggplot, you can use [ggokabeito](https://malcolmbarrett.github.io/ggokabeito/).
+
 
 ```{r}
 IBMColor <- c("#648fff", "#785ef0", "#dc267f", "#fe6100", "#ffb000")
@@ -126,6 +180,14 @@ df1 |>
   scale_fill_manual(values = IBMColor)
 ```
 
+<br>
+
+Now, I try to zoom the plot to distinguish differences among the experiments. 
+
+for zooming, I set `limits` and `breaks` in `sclae_y_continuous()`. 
+
+However, I can't see anything `r emo::ji("open_mouth")`. 
+
 ```{r}
 df1 |> 
   ggplot(aes(Expt, Avg, fill=as.factor(Expt))) +
@@ -134,6 +196,14 @@ df1 |>
   scale_y_continuous(limits = c(750, 950), breaks = seq(750, 950, 50))
 
 ```
+
+<br>
+
+that because, I didn't set proper coordinate system. 
+
+when I zoom in or zoom out the plot, I should be careful coordinate system.  
+
+if I set wrong coordinate system, data would clip (remove unseen data points). 
 
 If the purpose is to zoom, use the limit argument in the coordinate system (see [coord_cartesian()](https://ggplot2.tidyverse.org/reference/coord_cartesian.html)).
 
@@ -147,6 +217,8 @@ df1 |>
 
 ```
 
+<br>
+
 ```{r}
 df1 |> 
   ggplot(aes(Expt, Avg, fill=as.factor(Expt))) +
@@ -157,6 +229,8 @@ df1 |>
   coord_cartesian(ylim = c(750,950))
 
 ```
+
+<br>
 
 ```{r}
 df1 |> 
@@ -170,6 +244,8 @@ df1 |>
   coord_cartesian(ylim = c(750,950))
 
 ```
+
+<br>
 
 ```{r}
 df1 |> 

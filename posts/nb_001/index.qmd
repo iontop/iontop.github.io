@@ -92,7 +92,7 @@ df |> head()
 
 ```
 
-<br>
+## Visualization  
 
 If you were to draw a bar plot to visualize a dataset such as HairEyeColor, you would probably draw a plot like the one below. 
 
@@ -174,7 +174,7 @@ Another option is to overlay a line plot on top of a bar chart, which sometimes 
 I think this is an example of how ggplot is a powerful visualization tool. `r emo::ji("+1")`
 
 :::callout-tip
-As you can see, when we draw a point, we draw two points for one value. This is to make it look better, so we draw one point large in white and the other small in the same color as the bar. This work makes the distinction between a bar and a point clearer and helps the reader understand the trend of the line more easily.
+As you can see, when I draw a point, I draw two points for one value. This is to make it look better, so I draw one large point in white and the other smaller one in the same color as the bar. This work makes the distinction between a bar and a point clearer and helps the reader understand the trend of the line more easily.
 :::
 
 
