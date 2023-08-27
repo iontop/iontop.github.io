@@ -1,6 +1,6 @@
 ---
 title: "Bar Plot with HairEyeColor"
-author: "Junho (Sean) Ahn"
+author: Sean Ahn [`r emo::ji("e-mail")`](mailto:junho.ahn@gmail.com)
 date: "2023-08-19"
 categories: [ggplot, visualization]
 image: "image.png"
@@ -94,12 +94,17 @@ df |> head()
 
 <br>
 
+If you were to draw a bar plot to visualize a dataset such as HairEyeColor, you would probably draw a plot like the one below. 
+
+I've plotted a bar plot with men and women represented by different colors and separated by hair color using `facet_wrap()`. 
+
+If we just plotted a bar plot, it would be hard to tell the exact values, so we used `geom_text()` to display the values above each bar. If you want to use `geom_text()` to display the values, be sure to write **label = "the value you want to display"** in `aes()` of `ggplot()`.
 
 
 ```{r}
 df |> 
   ggplot(aes(x = Eye, y = Freq, fill = Sex, label = Freq)) +
-  geom_col(alpha = 0.8, position = "dodge", show.legend = FALSE) +
+  geom_col(alpha = 0.8, position = "dodge") +
   geom_text(aes(color = Sex, group = Sex), position = position_dodge(width = 1), vjust = -0.1, show.legend = FALSE) +
   labs(x = "Eye Color", y = "Frequency") +
   facet_wrap(~ Hair, strip.position = c("right")) +
@@ -110,7 +115,13 @@ df |>
 
 <br>
 
+Sometimes you want to highlight certain values in a bar graph. For example, if you want to highlight the eye colors that have the most of each in the hair color facet, the following code might be one of the appropriate answers. 
 
+You can also use ggplot extensions (such as [gghighlight](https://yutannihilation.github.io/gghighlight/articles/gghighlight.html)), but I only used the ggplot internal functions. The point is that we create one more column called "Chk" and fill it with different colors based on the value of "Chk".
+
+This method is fairly simple, but very useful for displaying specific values without affecting the original dataset (no transformations). 
+
+Especially when you have a large number of values to represent and a large number of bars, you can emphasize the message you want by representing certain values with a different color that stands out.
 
 ```{r}
 df |> 
@@ -131,6 +142,10 @@ df |>
 ```
 
 <br>
+
+When creating a bar plot and adding labels, sometimes you need to include both absolute values and percentages (%). 
+
+This code shows what to do in such situations. There are two ways to do this, I've used the `scales` package in the code below, and I've commented out the other way of calculating the % value and then adding the "%" symbol. Either way is your choice.
 
 
 ```{r}
@@ -154,26 +169,14 @@ df |>
 
 <br>
 
+Another option is to overlay a line plot on top of a bar chart, which sometimes makes for a great visualization. Actually it's not really necessary for this data set, but if you wanted to show changes over time, a line plot like the one below would be very helpful for readers to understand. 
 
-```{r}
-df |> 
-  filter(Sex == "Female") |> 
-  ggplot(aes(x = Eye, y = Freq, fill = Hair, label = Freq)) +
-  geom_col(alpha = 0.8) +
-  geom_point(color = "white", size = 4, show.legend = FALSE) +
-  geom_point(aes(color = Hair), size = 2, show.legend = FALSE) +
-  geom_path(aes(group = Hair, color = Hair), lty = 2, linewidth = 1, show.legend = FALSE) +
-  geom_text(aes(color = Hair), vjust = -1.0, show.legend = FALSE) +
-  labs(title = "Hair and Eye Color of Statistics Students",
-       subtitle = "Distribution of hair and eye color and sex in 592 statistics students.", 
-       x = "Eye Color", y = "Frequency") +
-  facet_wrap(~ Hair) +
-  scale_y_continuous(limits = c(0,80), breaks = seq(0,80,20)) +
-  theme_bw()
+I think this is an example of how ggplot is a powerful visualization tool. `r emo::ji("+1")`
 
-```
+:::callout-tip
+As you can see, when we draw a point, we draw two points for one value. This is to make it look better, so we draw one point large in white and the other small in the same color as the bar. This work makes the distinction between a bar and a point clearer and helps the reader understand the trend of the line more easily.
+:::
 
-<br>
 
 
 ```{r}

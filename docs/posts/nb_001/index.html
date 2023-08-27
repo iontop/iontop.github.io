@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Junho (Sean) Ahn">
+<meta name="author" content="Sean Ahn 📧">
 <meta name="dcterms.date" content="2023-08-19">
 
 <title>:: blog :: - Bar Plot with HairEyeColor</title>
@@ -182,7 +182,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p>Junho (Sean) Ahn </p>
+               <p>Sean Ahn <a href="mailto:junho.ahn@gmail.com">📧</a> </p>
             </div>
     </div>
       
@@ -217,8 +217,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)
-Ncells  577974 30.9    1316651 70.4         NA   669405 35.8
-Vcells 1056108  8.1    8388608 64.0      16384  1851688 14.2</code></pre>
+Ncells  733334 39.2    1272455   68         NA  1272455 68.0
+Vcells 1297552  9.9    8388608   64      16384  1908739 14.6</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -352,10 +352,13 @@ Hair    Brown Blue Hazel Green
 </div>
 </div>
 <p><br></p>
+<p>If you were to draw a bar plot to visualize a dataset such as HairEyeColor, you would probably draw a plot like the one below.</p>
+<p>I’ve plotted a bar plot with men and women represented by different colors and separated by hair color using <code>facet_wrap()</code>.</p>
+<p>If we just plotted a bar plot, it would be hard to tell the exact values, so we used <code>geom_text()</code> to display the values above each bar. If you want to use <code>geom_text()</code> to display the values, be sure to write <strong>label = “the value you want to display”</strong> in <code>aes()</code> of <code>ggplot()</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Eye, <span class="at">y =</span> Freq, <span class="at">fill =</span> Sex, <span class="at">label =</span> Freq)) <span class="sc">+</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">position =</span> <span class="st">"dodge"</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">color =</span> Sex, <span class="at">group =</span> Sex), <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="dv">1</span>), <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.1</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Eye Color"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> Hair, <span class="at">strip.position =</span> <span class="fu">c</span>(<span class="st">"right"</span>)) <span class="sc">+</span></span>
@@ -366,6 +369,10 @@ Hair    Brown Blue Hazel Green
 </div>
 </div>
 <p><br></p>
+<p>Sometimes you want to highlight certain values in a bar graph. For example, if you want to highlight the eye colors that have the most of each in the hair color facet, the following code might be one of the appropriate answers.</p>
+<p>You can also use ggplot extensions (such as <a href="https://yutannihilation.github.io/gghighlight/articles/gghighlight.html">gghighlight</a>), but I only used the ggplot internal functions. The point is that we create one more column called “Chk” and fill it with different colors based on the value of “Chk”.</p>
+<p>This method is fairly simple, but very useful for displaying specific values without affecting the original dataset (no transformations).</p>
+<p>Especially when you have a large number of values to represent and a large number of bars, you can emphasize the message you want by representing certain values with a different color that stands out.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Hair) <span class="sc">|&gt;</span> </span>
@@ -386,6 +393,8 @@ Hair    Brown Blue Hazel Green
 </div>
 </div>
 <p><br></p>
+<p>When creating a bar plot and adding labels, sometimes you need to include both absolute values and percentages (%).</p>
+<p>This code shows what to do in such situations. There are two ways to do this, I’ve used the <code>scales</code> package in the code below, and I’ve commented out the other way of calculating the % value and then adding the “%” symbol. Either way is your choice.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Sex <span class="sc">==</span> <span class="st">"Male"</span>) <span class="sc">|&gt;</span> </span>
@@ -407,6 +416,21 @@ Hair    Brown Blue Hazel Green
 </div>
 </div>
 <p><br></p>
+<p>Another option is to overlay a line plot on top of a bar chart, which sometimes makes for a great visualization. Actually it’s not really necessary for this data set, but if you wanted to show changes over time, a line plot like the one below would be very helpful for readers to understand.</p>
+<p>I think this is an example of how ggplot is a powerful visualization tool. 👍</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>As you can see, when we draw a point, we draw two points for one value. This is to make it look better, so we draw one point large in white and the other small in the same color as the bar. This work makes the distinction between a bar and a point clearer and helps the reader understand the trend of the line more easily.</p>
+</div>
+</div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Sex <span class="sc">==</span> <span class="st">"Female"</span>) <span class="sc">|&gt;</span> </span>
@@ -424,26 +448,6 @@ Hair    Brown Blue Hazel Green
 <span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p><br></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Sex <span class="sc">==</span> <span class="st">"Female"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Eye, <span class="at">y =</span> Freq, <span class="at">fill =</span> Hair, <span class="at">label =</span> Freq)) <span class="sc">+</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"white"</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> Hair), <span class="at">size =</span> <span class="dv">2</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="fu">aes</span>(<span class="at">group =</span> Hair, <span class="at">color =</span> Hair), <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">linewidth =</span> <span class="dv">1</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">color =</span> Hair), <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">1.0</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Hair and Eye Color of Statistics Students"</span>,</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"Distribution of hair and eye color and sex in 592 statistics students."</span>, </span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Eye Color"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> Hair) <span class="sc">+</span></span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">80</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">80</span>,<span class="dv">20</span>)) <span class="sc">+</span></span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p><br></p>
