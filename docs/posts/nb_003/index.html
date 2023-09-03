@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Junho (Sean) Ahn">
+<meta name="author" content="Sean Ahn">
 <meta name="dcterms.date" content="2023-08-26">
 
 <title>:: blog :: - Scatter plot with faithful</title>
@@ -182,7 +182,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p>Junho (Sean) Ahn </p>
+               <p>Sean Ahn </p>
             </div>
     </div>
       
@@ -207,6 +207,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
+<p>In this post, I’ll make scatter plot with trend line. Scatter plot display two variables on Cartesian coordinates.</p>
+<p>Scatter plot is useful and convenient because it can show either continuous variables or discrete variables all.</p>
 <section id="initilizing" class="level2">
 <h2 class="anchored" data-anchor-id="initilizing">Initilizing</h2>
 <p>I usually use the following code for initialization. If you don’t want to remove plots and/or variables, you can skip it.</p>
@@ -216,8 +218,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)
-Ncells  578398 30.9    1317862 70.4         NA   669405 35.8
-Vcells 1055709  8.1    8388608 64.0      16384  1851688 14.2</code></pre>
+Ncells  578448 30.9    1318007 70.4         NA   669402 35.8
+Vcells 1057511  8.1    8388608 64.0      16384  1851791 14.2</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -283,6 +285,9 @@ nickname       Beagle Scouts               </code></pre>
 <h3 class="anchored" data-anchor-id="details">Details</h3>
 <p>A closer look at faithful$eruptions reveals that these are heavily rounded times originally in seconds, where multiples of 5 are more frequent than expected under non-human measurement. For a better version of the eruption times, see the example below.</p>
 <p>There are many versions of this dataset around: Azzalini and Bowman (1990) use a more complete version.</p>
+<p><br></p>
+<p>First, let’s take a quick look at the contents of the dataset with <code>head()</code> function.</p>
+<p>I can see there are 2 columns and both data is number which is double type.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>faithful <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -295,21 +300,35 @@ nickname       Beagle Scouts               </code></pre>
 6     2.883      55</code></pre>
 </div>
 </div>
+<p><br></p>
+<p>and check what type is this dataset with <code>class()</code> function.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(faithful)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "data.frame"</code></pre>
 </div>
 </div>
+<p><br></p>
+<p>then check how big this dataset is with <code>dim()</code> function.</p>
+<p><code>faithful</code> dataset has 272 rows and 2 columns. it also very tiny dataset `r emo::ji(“grin”).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(faithful)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 272   2</code></pre>
 </div>
 </div>
+<p><br></p>
+<p><code>faithful</code> dataset store into <code>df</code> variable to keep original dataset.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> faithful</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+</section>
+<section id="visualization" class="level2">
+<h2 class="anchored" data-anchor-id="visualization">Visualization</h2>
+<p>You can use <code>ggplot()</code> and <code>geom_point()</code> to create a simple scatterplot.</p>
+<p>You may have noticed that there is a linear trend between the variables ‘atmospheric’ and ‘eruptive’.</p>
+<p>A scatter plot allows you to notice the trend between these two variables at once 👍.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(waiting, eruptions)) <span class="sc">+</span></span>
@@ -318,6 +337,9 @@ nickname       Beagle Scouts               </code></pre>
 <p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p><br></p>
+<p>I’ve coloured it to make the linearity along the x-axis values clear.</p>
+<p>For continuous values, sometimes the colour difference from adjusent values is not significant.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(waiting, eruptions, <span class="at">color =</span> waiting)) <span class="sc">+</span></span>
@@ -326,6 +348,9 @@ nickname       Beagle Scouts               </code></pre>
 <p><img src="index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p><br></p>
+<p>To make the linear relationship between the two variables more visible, I used the <code>cut_number()</code> function to color the ‘waiting’ variable in four separate steps.</p>
+<p>This way we can see the value of ‘eruptions’ for each level. In fact, the points of the ‘waiting’ variable colored in blue could probably be combined with the points colored in purple, but for the purposes of this post, I’ll leave them unmodified.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">waitLv =</span> <span class="fu">cut_number</span>(waiting, <span class="dv">4</span>)) <span class="sc">|&gt;</span> </span>
@@ -335,6 +360,11 @@ nickname       Beagle Scouts               </code></pre>
 <p><img src="index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p><br></p>
+<p>Anyway, I’ve made a good scatterplot. In addition, I want to add a linear trend equation.</p>
+<p>To do that, I need to create a linear model with the <code>lm()</code> function.</p>
+<p>It’s a pretty powerful 💪 R function.</p>
+<p>I can create a linear model using just the simple <code>lm()</code> function.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate slope and intercept of line of best fit</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>linear <span class="ot">&lt;-</span> <span class="fu">lm</span>(eruptions <span class="sc">~</span> waiting, <span class="at">data =</span> faithful)</span>
@@ -365,6 +395,11 @@ Coefficients:
 </div>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> linear<span class="sc">$</span>coefficients[<span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p><br></p>
+<p>We got the coefficient value as a result of <code>lm()</code>.</p>
+<p>I can see that the slope of the trend line I’m plotting is 0.0756279<code>, and the intercept is</code>linear$coefficients[1]`.</p>
+<p>It then draws a trend line on the plot with the slope and intercept values.</p>
+<p><code>geom_abline()</code> draws a line with specific slope and intercept values as shown below.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">waitLv =</span> <span class="fu">cut_number</span>(waiting, <span class="dv">4</span>)) <span class="sc">|&gt;</span> </span>
@@ -375,12 +410,16 @@ Coefficients:
 <p><img src="index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p><br></p>
+<p>If I use <code>geom_smooth()</code> to represent a confidence interval (se = TRUE), I can draw a trend line at once without having to find the slope and intercept values outside.</p>
+<p>However, even with <code>geom_smooth()</code>, I still need to know the slope and intercept to plot the trend equations, which can be redundant.</p>
+<p>It is users’ choice to use <code>geom_smooth()</code> or <code>geom_abline()</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">waitLv =</span> <span class="fu">cut_number</span>(waiting, <span class="dv">4</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(waiting, eruptions)) <span class="sc">+</span> <span class="co"># Should remove "aes(color = waitLv)" in ggplot()</span></span>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> waitLv)) <span class="sc">+</span></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm ,<span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="co"># BUT!! to extract equation you should using "lm()"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm ,<span class="at">se =</span> <span class="cn">TRUE</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>) <span class="co"># BUT!! to extract equation you should using "lm()"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
@@ -388,6 +427,9 @@ Coefficients:
 <p><img src="index_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p><br></p>
+<p>I put equation in plot with <code>annotate()</code> at proper location. and title, subtitle, name of x-axis and y-axis also display with <code>lab()</code>.</p>
+<p>Finally I got plot as below.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">waitLv =</span> <span class="fu">cut_number</span>(waiting, <span class="dv">4</span>)) <span class="sc">|&gt;</span> </span>
@@ -405,12 +447,13 @@ Coefficients:
 <p><img src="index_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p><br></p>
+<p>good luck! 👍</p>
 <div class="right">
 <p><strong>END OF POST</strong></p>
 </div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->

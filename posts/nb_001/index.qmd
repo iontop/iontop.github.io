@@ -1,6 +1,6 @@
 ---
 title: "Bar Plot with HairEyeColor"
-author: Sean Ahn [`r emo::ji("e-mail")`](mailto:junho.ahn@gmail.com)
+author: "Sean Ahn"
 date: "2023-08-19"
 categories: [ggplot, visualization]
 image: "image.png"
