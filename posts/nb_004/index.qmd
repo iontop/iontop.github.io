@@ -6,6 +6,10 @@ categories: [ggplot, visualization]
 image: "image.png"
 ---
 
+In this post, I'll talk area plot with Nile dataset. as you know, Nile is one of the famous time series dataset.   
+sometimes, time series dataset is hard to give message to reader.   
+To overcome it, I often use area plot as followings;  
+
 ## Initializing
 
 I usually use the following code for initialization. If you don't want to remove plots and/or variables, you can skip it.
@@ -25,10 +29,13 @@ version
 
 We want to use as few packages (some might call them "libraries") as possible. If possible, I'm going to use only the **tidyverse** package. [Tidyverse](https://www.tidyverse.org) is one of the most famous packages in R programming, and it's really powerful and useful.
 
+Moreover, I loaded [tsibble](https://tsibble.tidyverts.org) package. `tsibble` is the package to wrangle a time series dataset.   
+`tsibble` is also the one of tidyverse eco-system.   
+If you need to handle time series dataset with `tidyverse` package, `tsibble` definitely is a good choice.  
+
 ```{r}
 library(tidyverse)
 library(tsibble)
-library(gghighlight)
 
 ```
 
@@ -58,28 +65,27 @@ A time series of length 100.
 
 Durbin, J. and Koopman, S. J. (2001). Time Series Analysis by State Space Methods. Oxford University Press. http://www.ssfpack.com/DKbook.html
 
+<br>
+
+All rigth! Take a look the dataset.  
 
 ```{r}
 Nile
 
 ```
 
+<br>
+
+I got `ts` object which means time series dataset. `ts` is a vector or matrix of the observed time-series values. And this has observation time(start, end) and the number of observations per unit of time(frequency).  
+
 ```{r}
 class(Nile)
 
 ```
 
+<br>
 
-The tsibble package provides a data infrastructure for tidy temporal data with wrangling tools. Adapting the tidy data principles, tsibble is a data- and model-oriented object. In tsibble:
-
-1. Index is a variable with inherent ordering from past to present.
-
-2. Key is a set of variables that define observational units over time.
-
-3. Each observation should be uniquely identified by index and key.
-
-4. Each observational unit should be measured at a common interval, if regularly spaced.
-
+I'll manipulate Nile dataset with tidyverse eco-system, so I convert ts object to tsibble object. tsibble object is form of dataframe. 
 
 ```{r}
 #coerce ts to tsibble
@@ -92,20 +98,49 @@ df |> head()
 class(df)
 ```
 
+<br>
+
+then, check how big Nile dataset. it has 100 rows and 2 column. very tiny.  
+
 ```{r}
 dim(df)
 ```
+
+<br>
+
+Name the columns "Years" for the first column and "Flows" for the second column.  
 
 ```{r}
 colnames(df) <- c("year", "flow")
 df |> head()
 ```
 
+<br>
+
+Now you've created a simple line plot with ggplot. But while a simple line plot can show variation, it doesn't convey a message.
+
+Readers can see that somewhere after 1875, the flow of the Nile must have dropped sharply and then increased sharply the following year. They can also see that around 1912, the flow of the Nile was the lowest we've ever measured.
+
+And it looks like the flow in the first half of the measured data is higher than the flow in the second half.
+
 ```{r}
 df |> 
   ggplot(aes(year, flow)) +
   geom_line()
 ```
+
+<br>
+
+I want to divide the Nile flow into two periods (first half, second half) and compare the flows, while also capturing one of the most important elements of time series data: change from before in one plot.  
+
+To do this, I've create two more column with `mutate()` function. The `grp` column will distinguish whether first half or second half.   
+And the `lag` column will store the difference from the previous year.   
+
+:::callout-note
+With the availability of the `tidyverse` ecosystem, you can easily manipulate the shape of your data using functions like `mutate`.   
+For this reason, it is convenient to use time series data in `tsibble` objects.
+:::
+
 
 ```{r}
 df1 <- 
@@ -114,6 +149,12 @@ df1 <-
          lag = difference(flow, default = 0))
 df1
 ```
+
+## Visualization  
+
+I got area plot with `df1` dataset. 
+
+`flow` colored midnight blue and `lag` colored orange place in one plot.  
 
 
 ```{r}
@@ -124,6 +165,12 @@ df1 |>
   
 ```
 
+<br>
+
+To make it easier to understand, I've divided it into two parts, the first half and the second half. I then use the `facet_wrap()` function to place the first 50 years on top and the second 50 years on the bottom.
+
+To make it easier to distinguish between the first and second halves, I created a `grp` column when manipulating the data, assigning a value of 1 to data in the first half and a value of 2 to data in the second half.
+
 ```{r}
 df1 |> 
   ggplot(aes(year)) +
@@ -131,6 +178,12 @@ df1 |>
   geom_area(aes(y = lag), fill = "orange") +
   facet_wrap(vars(grp), ncol = 1)
 ```
+
+<br>
+
+I've used the `facet_wrap()' function to divide the first half and second half, but the labels are difficult to understand because they take the data values as they are.  Maybe lots of readers can not notice "1" means first half. 
+
+Therefore, to change the labels to make the graph easier to understand, we have used `labeller()' like below.  
 
 ```{r}
 grp_status <- c( "1" = "First 50years", "2" = "Second 50years")
@@ -145,6 +198,9 @@ df1 |>
   facet_wrap(vars(grp), ncol = 1, scale = "free_x", labeller = labeller(grp = grp_status))
 ```
 
+<br>
+
+I've put legend to understand what each colored area means. 
 
 ```{r}
 df1 |> 
@@ -156,7 +212,13 @@ df1 |>
 
 ```
 
-The first 50 years of the 100-year period saw more change, while the second 50 years saw less change.
+<br>
+
+The first 50 years of the 100-year period saw more change, while the second 50 years saw less change.  
+
+And by looking at the `lag` area, colored orange, readers can also see when there was a large change in flow.  
+
+At the end of this process, I get a plot like the one below. It can easily convey more information compared to a simple line plot.
 
 ```{r}
 df1 |> 
