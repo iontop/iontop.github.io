@@ -6,6 +6,9 @@ categories: [ggplot, visualization]
 image: "image.png"
 ---
 
+In this post, I've done a boxplot with ToothGrowth dataset. As you know, box plot is one of the most useful plot to visualize the dataset. But I don't explain what box plot. If you want to know what box plot is, you can see the [wiki](https://en.wikipedia.org/wiki/Box_plot).
+
+
 ## Initializing
 
 I usually use the following code for initialization. If you don't want to remove plots and/or variables, you can skip it.
@@ -27,8 +30,6 @@ We want to use as few packages (some might call them "libraries") as possible. I
 
 ```{r}
 library(tidyverse)
-library(tsibble)
-library(gghighlight)
 
 ```
 
@@ -54,9 +55,13 @@ ToothGrowth
 
 A data frame with 60 observations on 3 variables.
 
-[,1]	len	numeric	Tooth length
-[,2]	supp	factor	Supplement type (VC or OJ).
-[,3]	dose	numeric	Dose in milligrams/day
+[,1]	len	numeric	Tooth length.   
+[,2]	supp	factor	Supplement type (VC or OJ).  
+[,3]	dose	numeric	Dose in milligrams/day. 
+
+As like other posts, I check what is in dataset and how big dataset is.  
+
+Nothing special `r emo::ji("sunglasses")`
 
 ```{r}
 ToothGrowth |> head()
@@ -72,16 +77,24 @@ ToothGrowth |> dim()
 
 ## Visualization
 
+All right! First of all, dataset copied into 'df' variable to preserve original data.  
+
+It is fine for now because I work with built-in dataset. However, I strongly recommend copy if you work with your own dataset. It will help you saving time or work done properly.
+
 ```{r}
 df <- ToothGrowth
 df |> head()
 ```
+
+Now I make simple dotplot. it is hard to understand what data mean. but readers can notice there are distribution on something.
 
 ```{r}
 df |> 
   ggplot(aes(supp, len)) +
   geom_point()
 ```
+
+I overlay boxplot with dotplot. it can make readers understand easily because box plot shows lots of information graphically. (e.g median, first quartile, third quartile, etc.). 
 
 ```{r}
 df |> 
@@ -90,12 +103,18 @@ df |>
   geom_point()
 ```
 
+I colored data respectively to distinguish easily. 
+
 ```{r}
 df |> 
   ggplot(aes(supp, len, color = supp)) +
   geom_boxplot(alpha = 0.5, show.legend = FALSE) +
   geom_point()
 ```
+
+I replace to `geom_jitter()` because some of data is overplotting when I used `geom_point()`.  
+
+It looks much better! `r emo::ji("+1")`  
 
 ```{r}
 df |> 
@@ -104,7 +123,7 @@ df |>
   geom_jitter(alpha = 0.7, width = 0.2)
 ```
 
-The standard error is just the standard deviation divided by the square root of the sample size. So you can easily make your own function:
+to make whisker on boxplot, I added `min` and `max` column with `mutate()` function. 
 
 ```{r}
 df1 <- 
@@ -112,6 +131,8 @@ df1 <-
   group_by(supp) |> 
   mutate(min = min(len), max = max(len))
 ```
+
+Then `goem_errorbar()` shows minimum value and maximum value as like below.  
 
 ```{r}
 df1 |> 
@@ -122,6 +143,8 @@ df1 |>
 
 ```
 
+In fact, this boxplot is pretty good enough. To make the boxplot into a dose-dependent plot of tooth growth, I create a new variable named df2.  
+
 ```{r}
 df2 <- 
   df |> 
@@ -129,6 +152,7 @@ df2 <-
   mutate(min = min(len), max = max(len))
 ```
 
+If I make the plot in the same way as before, and use the `facet_warp()` function to draw a boxplot by dose, I'll get something like this. 
 
 ```{r}
 df2 |> 
@@ -139,6 +163,10 @@ df2 |>
   facet_wrap(vars(dose))
 
 ```
+
+All most done now. to specify what tab means, I change tab names with `labeller()` function. and I add an explanation in plot, decorate theme.
+
+I finally got it. `r emo::ji("beer")`
 
 ```{r}
 dose_status <- c("0.5" = "0.5mg/day", "1" = "1.0mg/day", "2" = "2.0mg/day")

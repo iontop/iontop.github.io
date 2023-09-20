@@ -207,6 +207,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 
 
+<p>In this post, I’ve done a boxplot with ToothGrowth dataset. As you know, box plot is one of the most useful plot to visualize the dataset. But I don’t explain what box plot. If you want to know what box plot is, you can see the <a href="https://en.wikipedia.org/wiki/Box_plot">wiki</a>.</p>
 <section id="initializing" class="level2">
 <h2 class="anchored" data-anchor-id="initializing">Initializing</h2>
 <p>I usually use the following code for initialization. If you don’t want to remove plots and/or variables, you can skip it.</p>
@@ -216,8 +217,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">gc</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)
-Ncells  578433 30.9    1317964 70.4         NA   669402 35.8
-Vcells 1055849  8.1    8388608 64.0      16384  1851791 14.2</code></pre>
+Ncells  578462 30.9    1318111 70.4         NA   669274 35.8
+Vcells 1056852  8.1    8388608 64.0      16384  1851504 14.2</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -258,20 +259,6 @@ nickname       Beagle Scouts               </code></pre>
 ✖ dplyr::lag()    masks stats::lag()
 ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tsibble)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'tsibble'
-
-The following object is masked from 'package:lubridate':
-
-    interval
-
-The following objects are masked from 'package:base':
-
-    intersect, setdiff, union</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gghighlight)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="select-dataset" class="level2">
@@ -291,9 +278,13 @@ The following objects are masked from 'package:base':
 <section id="format" class="level3">
 <h3 class="anchored" data-anchor-id="format">Format</h3>
 <p>A data frame with 60 observations on 3 variables.</p>
-<p>[,1] len numeric Tooth length [,2] supp factor Supplement type (VC or OJ). [,3] dose numeric Dose in milligrams/day</p>
+<p>[,1] len numeric Tooth length.<br>
+[,2] supp factor Supplement type (VC or OJ).<br>
+[,3] dose numeric Dose in milligrams/day.</p>
+<p>As like other posts, I check what is in dataset and how big dataset is.</p>
+<p>Nothing special 😎</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>ToothGrowth <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ToothGrowth <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   len supp dose
 1  4.2   VC  0.5
@@ -305,13 +296,13 @@ The following objects are masked from 'package:base':
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>ToothGrowth <span class="sc">|&gt;</span> <span class="fu">class</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ToothGrowth <span class="sc">|&gt;</span> <span class="fu">class</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "data.frame"</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ToothGrowth <span class="sc">|&gt;</span> <span class="fu">dim</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ToothGrowth <span class="sc">|&gt;</span> <span class="fu">dim</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 60  3</code></pre>
 </div>
@@ -320,9 +311,11 @@ The following objects are masked from 'package:base':
 </section>
 <section id="visualization" class="level2">
 <h2 class="anchored" data-anchor-id="visualization">Visualization</h2>
+<p>All right! First of all, dataset copied into ‘df’ variable to preserve original data.</p>
+<p>It is fine for now because I work with built-in dataset. However, I strongly recommend copy if you work with your own dataset. It will help you saving time or work done properly.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> ToothGrowth</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> ToothGrowth</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   len supp dose
 1  4.2   VC  0.5
@@ -333,91 +326,101 @@ The following objects are masked from 'package:base':
 6 10.0   VC  0.5</code></pre>
 </div>
 </div>
+<p>Now I make simple dotplot. it is hard to understand what data mean. but readers can notice there are distribution on something.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(supp, len)) <span class="sc">+</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(supp, len)) <span class="sc">+</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>I overlay boxplot with dotplot. it can make readers understand easily because box plot shows lots of information graphically. (e.g median, first quartile, third quartile, etc.).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(supp, len)) <span class="sc">+</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(supp, len)) <span class="sc">+</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>I colored data respectively to distinguish easily.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(supp, len, <span class="at">color =</span> supp)) <span class="sc">+</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(supp, len, <span class="at">color =</span> supp)) <span class="sc">+</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>I replace to <code>geom_jitter()</code> because some of data is overplotting when I used <code>geom_point()</code>.</p>
+<p>It looks much better! 👍</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(supp, len, <span class="at">color =</span> supp)) <span class="sc">+</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">width =</span> <span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">|&gt;</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(supp, len, <span class="at">color =</span> supp)) <span class="sc">+</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">width =</span> <span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>The standard error is just the standard deviation divided by the square root of the sample size. So you can easily make your own function:</p>
+<p>to make whisker on boxplot, I added <code>min</code> and <code>max</code> column with <code>mutate()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> </span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  df <span class="sc">|&gt;</span> </span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(supp) <span class="sc">|&gt;</span> </span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">min =</span> <span class="fu">min</span>(len), <span class="at">max =</span> <span class="fu">max</span>(len))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  df <span class="sc">|&gt;</span> </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(supp) <span class="sc">|&gt;</span> </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">min =</span> <span class="fu">min</span>(len), <span class="at">max =</span> <span class="fu">max</span>(len))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>Then <code>goem_errorbar()</code> shows minimum value and maximum value as like below.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="sc">|&gt;</span> </span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(supp, len, <span class="at">color =</span> supp)) <span class="sc">+</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> min, <span class="at">ymax =</span> max), <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">width =</span> <span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="sc">|&gt;</span> </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(supp, len, <span class="at">color =</span> supp)) <span class="sc">+</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> min, <span class="at">ymax =</span> max), <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">width =</span> <span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>In fact, this boxplot is pretty good enough. To make the boxplot into a dose-dependent plot of tooth growth, I create a new variable named df2.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> </span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  df <span class="sc">|&gt;</span> </span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(supp, dose) <span class="sc">|&gt;</span> </span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">min =</span> <span class="fu">min</span>(len), <span class="at">max =</span> <span class="fu">max</span>(len))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  df <span class="sc">|&gt;</span> </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(supp, dose) <span class="sc">|&gt;</span> </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">min =</span> <span class="fu">min</span>(len), <span class="at">max =</span> <span class="fu">max</span>(len))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>If I make the plot in the same way as before, and use the <code>facet_warp()</code> function to draw a boxplot by dose, I’ll get something like this.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>df2 <span class="sc">|&gt;</span> </span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(supp, len, <span class="at">color =</span> supp)) <span class="sc">+</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> min, <span class="at">ymax =</span> max), <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(dose))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>df2 <span class="sc">|&gt;</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(supp, len, <span class="at">color =</span> supp)) <span class="sc">+</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> min, <span class="at">ymax =</span> max), <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(dose))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>All most done now. to specify what tab means, I change tab names with <code>labeller()</code> function. and I add an explanation in plot, decorate theme.</p>
+<p>I finally got it. 🍺</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>dose_status <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"0.5"</span> <span class="ot">=</span> <span class="st">"0.5mg/day"</span>, <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"1.0mg/day"</span>, <span class="st">"2"</span> <span class="ot">=</span> <span class="st">"2.0mg/day"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>dose_status <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"0.5"</span> <span class="ot">=</span> <span class="st">"0.5mg/day"</span>, <span class="st">"1"</span> <span class="ot">=</span> <span class="st">"1.0mg/day"</span>, <span class="st">"2"</span> <span class="ot">=</span> <span class="st">"2.0mg/day"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>df2 <span class="sc">|&gt;</span> </span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(supp, len, <span class="at">color =</span> supp)) <span class="sc">+</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> min, <span class="at">ymax =</span> max), <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(dose), <span class="at">labeller =</span> <span class="fu">labeller</span>(<span class="at">dose =</span> dose_status)) <span class="sc">+</span></span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"The Effect of Vitamin C on Tooth Growth in Guinea Pigs"</span>,</span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">"The response is the length of odontoblasts (cells responsible for tooth growth) in 60 guinea pigs."</span>,<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, </span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"Each animal received one of three dose levels of vitamin C (0.5, 1, and 2 mg/day)"</span>,<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>,</span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"by one of two delivery methods, orange juice or ascorbic acid (a form of vitamin C and coded as VC)."</span>),</span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Supplement type"</span>, <span class="at">y =</span> <span class="st">"Tooth length"</span>, <span class="at">color =</span> <span class="st">"Supplement type"</span>) <span class="sc">+</span></span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>df2 <span class="sc">|&gt;</span> </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(supp, len, <span class="at">color =</span> supp)) <span class="sc">+</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> min, <span class="at">ymax =</span> max), <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">width =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(dose), <span class="at">labeller =</span> <span class="fu">labeller</span>(<span class="at">dose =</span> dose_status)) <span class="sc">+</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"The Effect of Vitamin C on Tooth Growth in Guinea Pigs"</span>,</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="fu">paste0</span>(<span class="st">"The response is the length of odontoblasts (cells responsible for tooth growth) in 60 guinea pigs."</span>,<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>, </span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"Each animal received one of three dose levels of vitamin C (0.5, 1, and 2 mg/day)"</span>,<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>,</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>                         <span class="st">"by one of two delivery methods, orange juice or ascorbic acid (a form of vitamin C and coded as VC)."</span>),</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Supplement type"</span>, <span class="at">y =</span> <span class="st">"Tooth length"</span>, <span class="at">color =</span> <span class="st">"Supplement type"</span>) <span class="sc">+</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
 </div>

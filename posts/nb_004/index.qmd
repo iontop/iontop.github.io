@@ -181,9 +181,9 @@ df1 |>
 
 <br>
 
-I've used the `facet_wrap()' function to divide the first half and second half, but the labels are difficult to understand because they take the data values as they are.  Maybe lots of readers can not notice "1" means first half. 
+I've used the `facet_wrap()` function to divide the first half and second half, but the labels are difficult to understand because they take the data values as they are.  Maybe lots of readers can not notice "1" means first half. 
 
-Therefore, to change the labels to make the graph easier to understand, we have used `labeller()' like below.  
+Therefore, to change the labels to make the graph easier to understand, we have used `labeller()` like below.  
 
 ```{r}
 grp_status <- c( "1" = "First 50years", "2" = "Second 50years")
