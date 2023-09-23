@@ -6,6 +6,8 @@ categories: [ggplot, visualization]
 image: "image.png"
 ---
 
+In this blog post, I made line plot with CO2 dataset. CO2 dataset is [groupedData](https://www.rdocumentation.org/packages/nlme/versions/3.1-163/topics/groupedData). It's very useful object when you make complicated dataset with formula.
+
 ## Initializing
 
 I usually use the following code for initialization. If you don't want to remove plots and/or variables, you can skip it.
@@ -69,13 +71,21 @@ The $CO_2$ uptake of six plants from Quebec and six plants from Mississippi was 
 
 This dataset was originally part of package nlme, and that has methods (including for [, as.data.frame, plot and print) for its grouped-data classes.
 
+Take a look the CO2 dataset.  
+
+As I said before, CO2 is groupedData (also dataframe). so its description show **nfnGrpdD**. 
+
 ```{r}
 CO2 |> head()
 ```
 
+CO2 dataset has several attributes as followings;  
+
 ```{r}
 CO2 |> class()
 ```
+
+and CO2 is 84 rows and 5 columns. it very tiny.  
 
 ```{r}
 CO2 |> dim()
@@ -83,13 +93,70 @@ CO2 |> dim()
 
 ## Visualization
 
+before make plot, I'd like to know how many kind of Plant in CO2.
+
+if there are too many kind of Plant, I can't make plots at once. It might be too hard to read even I made plot.
+
 ```{r}
 unique(CO2[,1:3])
 ```
 
+Great! There are 12 types of plants in total.  
+
+This is the essential information I need to know to plot ahead.
+
+If I plot with `plot()` function, it will appear like below.
+
+
 ```{r}
-plot(CO2)
+plot(formula = uptake ~ conc,
+     data = CO2,
+     type = "p", 
+     main = "Carbon Dioxide Uptake in Grass Plants")
 ```
+
+Of course, it is also possible to draw a plot classified by Plant using only the native functions, as shown in the steps below.
+
+However, using ggplot2 is a much simpler and faster way to create beautiful plot.
+
+```{r}
+# Split the dataset by the "Plant" factor
+split_data <- split(CO2, CO2$Plant)
+
+# Set the number of rows and columns in the grid
+num_rows <- 3
+num_cols <- 4
+
+# Create separate scatterplots for each plant
+par(mfrow = c(num_rows, num_cols))
+
+# Get the names of the plants
+plant_names <- names(split_data)
+
+# Loop through each plant and create a scatterplot
+for (i in 1:min(length(plant_names), num_rows * num_cols)) {
+  plant_data <- split_data[[plant_names[i]]]
+  
+  # Create the scatterplot with points and lines connecting them
+  plot(uptake ~ conc, data = plant_data, 
+       main = plant_names[i],
+       xlab = "Concentration", ylab = "CO2 Uptake",
+       col = "blue", pch = 16)  # pch = 16 specifies point shape
+  
+  lines(uptake ~ conc, data = plant_data, col = "blue")  # Add lines connecting points
+  grid() # Add grid each plot
+}
+
+# Add the common plot title at the top of the entire grid
+mtext("Carbon Dioxide Uptake in Grass Plants", side = 3, line = -1.5, outer = TRUE, cex = 1.2)
+
+# Reset the plotting parameters
+par(mfrow = c(1, 1))
+```
+
+Now, I start to make plot with ggplot! `r emo::ji("chart_with_upwards_trend")` 
+
+this is very simple dot plot. almost same as result of `base::plot()`. 
 
 ```{r}
 CO2 |> 
@@ -98,6 +165,10 @@ CO2 |>
 
 ```
 
+To make it easier for readers to understand, I drew a plot for each of the 12 plant species with lines connecting the dots.  
+
+It's easier to understand than the previous plot, but I still see areas for improvement.  
+
 ```{r}
 CO2 |> 
   ggplot(aes(conc, uptake)) +
@@ -105,6 +176,10 @@ CO2 |>
   geom_point(shape = 21, fill = "white", color = "black") +
   facet_wrap(vars(Plant), nrow = 1)
 ```
+
+I created the **first plot** below to give the reader an idea of what to expect. The plots for each of the 12 plants are arranged side-by-side and have the same y scale to make them easier to compare.  
+
+The label values on the x-axis were rotated 90 degrees to avoid overlapping letters, making it easier for readers to read the numbers.   
 
 ```{r}
 CO2 |> 
@@ -123,6 +198,14 @@ CO2 |>
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))
 ```
 
+
+This time, I plotted a different version of line plot. This plot is a useful way to show a specific value in a [spaghetti plot](https://graphics.cs.wisc.edu/WP/vis17/2017/10/17/design-challenge-2-spaghetti-plots/) with a lot of data jumbled together.  
+
+The package [gghighlight](https://yutannihilation.github.io/gghighlight/articles/gghighlight.html) makes it very easy to do this `r emo::ji("+1")`, but I sometimes use the above method of plotting using `ggplot`'s layers instead of using the `gghighlight` package.   
+
+The key to plotting with `ggplot`'s layer method is to use the `subset()` function. This is a very useful tip because it allows you to highlight one or more graphs.  
+
+Both methods are great, so it's a matter of preference.  
 
 ```{r}
 CO2 |> 
@@ -146,6 +229,10 @@ CO2 |>
         legend.box.background = element_rect(color = "black"))
 ```
 
+This time, we want to plot the classification of plants according to their macroclassification (Mc, Mn, Qc, Qn).  
+
+To do this, we first create a column called category using the mutate() function and put in the values that define the major classifications of plants.  
+
 
 ```{r}
 df <- 
@@ -157,6 +244,10 @@ df <-
                               .default = "Unknown"))
 df |> head()
 ```
+
+I have colored them according to the Plant category because if we colored them according to the Plant taxonomy, they would be indistinguishable.  
+
+The rest of the plot is the same as the previous plot.
 
 ```{r}
 df |> 
@@ -173,6 +264,11 @@ df |>
   theme_bw()
 ```
 
+When plotting as above, it is sometimes uncomfortable to see a lot of items in the legend.  
+
+Or, you may want to show each piece of data in a single plot.  
+
+In either case, the solution is to break it down into smaller plots with appropriate zones. Like the one I created earlier with the native `plot()` function, I can display 12 small plots in a 4X3 array as shown below, and you can see that the code has become very simple and straightforward.  
 
 ```{r}
 df |> 
@@ -189,6 +285,9 @@ df |>
   theme_bw()
 ```
 
+I've plotted four different line plots in this blog post, which can be broadly divided into two categories.   
+
+Line plots are likely to look cluttered when plotted on a single plot, so it's important to keep them as simple as possible.  
 
 ```{r include=FALSE}
 ggsave("image.png")

@@ -6,7 +6,7 @@ categories: [ggplot, visualization]
 image: "image.png"
 ---
 
-In this post, I've done a boxplot with ToothGrowth dataset. As you know, box plot is one of the most useful plot to visualize the dataset. But I don't explain what box plot. If you want to know what box plot is, you can see the [wiki](https://en.wikipedia.org/wiki/Box_plot).
+In this post, I've done a boxplot with ToothGrowth dataset. as you know, box plot is one of the most useful plot to visualize the dataset. But I don't explain what box plot. If you want to know what box plot is, you can see the [wiki](https://en.wikipedia.org/wiki/Box_plot).
 
 
 ## Initializing
