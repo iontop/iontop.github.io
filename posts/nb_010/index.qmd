@@ -1,0 +1,192 @@
+---
+title: "Strip plot with WorldPhones"
+author: "Sean Ahn"
+date: "2024-01-22"
+categories: [ggplot, visualization]
+image: "image.png"
+---
+
+Today we're going to draw a horizontal stacked bar graph.   
+
+A surprisingly common use of these plots is a single bar graph lying on its side, which I call a **"strip plot"**.  
+
+It's useful when you want to fill in details when drawing a pie plot, or when you want to see approximate proportions and absolute values at once.  
+
+## Initializing
+
+I usually use the following code for initialization. If you don't want to remove plots and/or variables, you can skip it.
+
+```{r}
+graphics.off()
+rm(list = ls())
+gc()
+
+```
+
+```{r}
+version
+```
+
+## Loading Useful Library
+
+We want to use as few packages (some might call them "libraries") as possible. If possible, I'm going to use only the **tidyverse** package. [Tidyverse](https://www.tidyverse.org) is one of the most famous packages in R programming, and it's really powerful and useful.
+
+```{r}
+library(tidyverse)
+
+```
+
+## Select Dataset
+
+When I write posts in my blog, I use the built-in dataset because I don't want the reader to suffer by having to find the data from somewhere else.
+
+The dataset I'll be using in this post is shown below `r emo::ji("down_arrow")` `r emo::ji("down_arrow")` `r emo::ji("down_arrow")`.
+
+<br>
+
+**The World's Telephones** 
+
+Description
+The number of telephones in various regions of the world (in thousands).  
+
+Usage   
+WorldPhones  
+
+Format  
+A matrix with 7 rows and 8 columns. The columns of the matrix give the figures for a given region, and the rows the figures for a year.  
+
+The regions are: North America, Europe, Asia, South America, Oceania, Africa, Central America.  
+
+The years are: 1951, 1956, 1957, 1958, 1959, 1960, 1961.    
+
+Source  
+AT&T (1961) The World's Telephones.  
+
+References  
+McNeil, D. R. (1977) Interactive Data Analysis. New York: Wiley.  
+
+
+```{r}
+WorldPhones |> head()
+```
+
+`WorldPhones` dataset is typical matrix object.   
+
+```{r}
+WorldPhones |> class()
+```
+
+Let's change to a dataframe to create a strip plot.  
+
+```{r}
+df <- as.data.frame(WorldPhones)
+```
+
+The year is in the row name, but I removed the row name and brought it to the first column for convenient data manipulation in the future.  
+
+```{r}
+df <- df |> mutate(year = as.numeric(rownames(df)), .before = "N.Amer")
+rownames(df) <- NULL
+
+df
+
+```
+
+```{r}
+class(df)
+```
+
+```{r}
+dim(df)
+```
+
+## Visualization
+
+`WorldPhones` is a matrix, so you can easily draw a dot plot using the built-in function as shown below.  
+
+Actually, it's not bad. `r emo::ji("thinking")`   
+
+```{r}
+barplot(t(WorldPhones)[,7])
+title(main = "World phones data in 1961")
+```
+
+However, it would be more intuitive to represent the number of phones in each country on a single line with a length proportional to the number.  
+Drawing such a stacked bar chart is not easy with the built-in `barplot()` function.  
+
+There are several ways to draw a single stacked bar plot (a.k.a. strip plot), but it is more convenient to use the geom_col() function than to use the geom_bar() function. 
+
+
+::: {.callout-tip}
+In this case, a tip is to leave the x-axis blank `aes(x = "")` for the aesthetic.  
+:::
+
+```{r}
+df |> 
+  filter(year == "1961") |> 
+  pivot_longer(-year, names_to = "region", values_to = "num_tele") |> 
+  ggplot(aes(x = "",y = num_tele, fill = region)) +
+  geom_col()
+
+```
+
+We're almost there. Now you can reorient the plot, reduce its width, and fill it with a colour of your choice to create a strip plot.  
+
+```{r}
+df |> 
+  filter(year == "1961") |> 
+  pivot_longer(-year, names_to = "region", values_to = "num_tele") |> 
+  ggplot(aes(x = "",y = reorder(num_tele, num_tele), fill = region)) +
+  geom_col(width = 0.5) +
+  coord_flip()
+```
+
+I added labels to make it easier to see the number of phones and rotated the labels to make them easier to read. 
+
+```{r}
+df |> 
+  filter(year == "1961") |> 
+  pivot_longer(-year, names_to = "region", values_to = "num_tele") |> 
+  ggplot(aes(x = "",y = reorder(num_tele, num_tele), fill = region)) +
+  geom_col(width = 0.5) +
+  geom_text(aes(label = num_tele), angle = -90,
+            position = position_stack(vjust = 0.5)) +
+  scale_fill_brewer(palette = "Set2") +
+  coord_flip()
+```
+
+The last step is to add a title and a few more embellishments to finish it off.
+
+```{r}
+df |> 
+  filter(year == "1961") |> 
+  pivot_longer(-year, names_to = "region", values_to = "num_tele") |> 
+  ggplot(aes(x = "",y = reorder(num_tele, num_tele), fill = region)) +
+  geom_col(width = 0.5) +
+  geom_text(aes(label = paste0(region,"\n",num_tele)), angle = -90,
+            position = position_stack(vjust = 0.5)) +
+  scale_fill_brewer(palette = "Set2") +
+  coord_flip() +
+  labs(title = "The World's Telephones at 1961",
+       subtitle = "The number of telephones in various regions of the world (in thousands).",
+       fill = "Region") +
+  theme_void() +
+  theme(plot.margin = margin(80,10,50,10), legend.position = "bottom")
+```
+
+Good job! `r emo::ji("+1")`
+
+```{r include=FALSE}
+ggsave("image.png")
+```
+
+<div class="right">
+__END OF POST__
+</div>
+
+
+
+
+
+
+
