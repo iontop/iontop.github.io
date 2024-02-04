@@ -18,12 +18,12 @@ about:
 
 I have been a performance engineer for [steam turbines](https://en.wikipedia.org/wiki/Steam_turbine) for the past 16 years at [DoosanEnerbility](https://www.doosanenerbility.com/en) If you want to know more about my background as an engineer, please visit my [LinkedIn profile](https://www.linkedin.com/in/junho-ahn-engineer/). I welcome discussions and questions about operation data processing, visualization, and, if you want, steam turbines and other major power plant equipment (boilers, gas turbines, generators, etc.). 
 
-The words "steam turbine" and "performance engineer" are probably very foreign to you. If you work in a power plant or produce equipment to generate electricity, you might know them, but for most people, they are unfamiliar `r emo::ji("sweat_smile")`. 
+The words "steam turbine" and "performance engineer" are probably very foreign to you. If you work in a power plant or produce equipment to generate electricity, you might know them, but for most people, they are unfamiliar😅. 
 
 As I mentioned earlier, I am a steam turbine engineer and have a background in mechanical engineering, based in South Korea and my current role is to provide engineering solutions to customers for power plant operational issues.   
 
 I enjoy analyzing data, which is why I started using R, a statistical language, and am now very interested in data visualization. 
-Most of the data I work with is time series data from power plants, and my main job is to analyze it to find the root cause of issues and suggest solutions, so it's necessary to me to be able to visualize what I need in order to deliver intuitive messages to customers.
+Most of the data I worked with is time series data from power plants, and my main job was to analyze it to find the root cause of issues and suggest solutions, so it's necessary to me to be able to visualize what I need in order to deliver intuitive messages to customers.
 
 To build this blog, I use [Quarto](https://quarto.org) and publish it to [github](https://github.com).
 [Quarto](https://quarto.org) is one of my favorite publishing tool! If you haven't tried it yet, you should give it a try.
