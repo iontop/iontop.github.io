@@ -1,5 +1,5 @@
 ---
-title: "Sean Ahn"
+title: "About me"
 image: profile.jpg
 about:
   template: trestles
