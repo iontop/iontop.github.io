@@ -40,5 +40,8 @@
   },
   "posts/nb_010/index.qmd": {
     "index.html": "123d3be9"
+  },
+  "blog.qmd": {
+    "blog.html": "2fe0337f"
   }
 }

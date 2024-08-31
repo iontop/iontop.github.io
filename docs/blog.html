@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>welcome – :: blog ::</title>
+<title>my posts – :: blog ::</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,6 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -66,7 +68,65 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script>
 
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -93,7 +153,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Sean Ahn</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./blog.html"> 
+    <a class="nav-link active" href="./blog.html" aria-current="page"> 
 <span class="menu-text">my posts</span></a>
   </li>  
   <li class="nav-item compact">
@@ -116,13 +176,13 @@ ul.task-list li input[type="checkbox"] {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page">
-      <h1 class="title">welcome</h1>
+    <div class="quarto-title column-page-left">
+      <h1 class="title">my posts</h1>
                       </div>
   </div>
     
   
-  <div class="quarto-title-meta column-page">
+  <div class="quarto-title-meta column-page-left">
 
       
     
@@ -133,9 +193,11 @@ ul.task-list li input[type="checkbox"] {
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(10)</span></div><div class="category" data-category="ggplot">ggplot <span class="quarto-category-count">(10)</span></div><div class="category" data-category="visualization">visualization <span class="quarto-category-count">(10)</span></div></div></div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page" id="quarto-document-content">
+<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
 
 
@@ -144,7 +206,381 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-</main> <!-- /main -->
+
+<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="listing-actions-group">
+    <div class="input-group input-group-sm quarto-listing-filter">
+      <span class="input-group-text"><i class="bi bi-search"></i></span>
+      <input type="text" class="search form-control" placeholder="Filter">
+    </div>
+</div>
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-categories="ggplot,visualization" data-listing-date-sort="1705849200000" data-listing-file-modified-sort="1705931541565" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="783">
+<div class="thumbnail">
+<p><a href="./posts/nb_010/index.html" class="no-external"></a></p><a href="./posts/nb_010/index.html" class="no-external">
+<p><img loading="lazy" src="./posts/nb_010/image.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/nb_010/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/nb_010/index.html" class="no-external">Strip plot with WorldPhones</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/nb_010/index.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('ggplot'); return false;">
+ggplot
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('visualization'); return false;">
+visualization
+</div>
+</div>
+<div class="listing-description">
+<a href="./posts/nb_010/index.html" class="no-external">Today we’re going to draw a horizontal stacked bar graph.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/nb_010/index.html" class="no-external">
+<div class="listing-date">
+Jan 22, 2024
+</div>
+<div class="listing-author">
+Sean Ahn
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="ggplot,visualization" data-listing-date-sort="1705762800000" data-listing-file-modified-sort="1705822158491" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="751">
+<div class="thumbnail">
+<p><a href="./posts/nb_009/index.html" class="no-external"></a></p><a href="./posts/nb_009/index.html" class="no-external">
+<p><img loading="lazy" src="./posts/nb_009/image.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/nb_009/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/nb_009/index.html" class="no-external">Lollipop plot with Islands</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/nb_009/index.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('ggplot'); return false;">
+ggplot
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('visualization'); return false;">
+visualization
+</div>
+</div>
+<div class="listing-description">
+<a href="./posts/nb_009/index.html" class="no-external">When displaying a large number of datasets in a bar plot or line plot, it is difficult to distinguish between the data due to the phenomenon of overlapping lines.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/nb_009/index.html" class="no-external">
+<div class="listing-date">
+Jan 21, 2024
+</div>
+<div class="listing-author">
+Sean Ahn
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="2" data-categories="ggplot,visualization" data-listing-date-sort="1697900400000" data-listing-file-modified-sort="1697966901807" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="803">
+<div class="thumbnail">
+<p><a href="./posts/nb_008/index.html" class="no-external"></a></p><a href="./posts/nb_008/index.html" class="no-external">
+<p><img loading="lazy" src="./posts/nb_008/image.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/nb_008/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/nb_008/index.html" class="no-external">Pyramid plot with ToothGrowth</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/nb_008/index.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('ggplot'); return false;">
+ggplot
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('visualization'); return false;">
+visualization
+</div>
+</div>
+<div class="listing-description">
+<a href="./posts/nb_008/index.html" class="no-external">Today I’m gonna make pyramid plot. Typically this plot use comparing two classes at the same time. Maybe you guys saw pyramid plot comparing male and female population by age.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/nb_008/index.html" class="no-external">
+<div class="listing-date">
+Oct 22, 2023
+</div>
+<div class="listing-author">
+Sean Ahn
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="3" data-categories="ggplot,visualization" data-listing-date-sort="1696086000000" data-listing-file-modified-sort="1696148757878" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="979">
+<div class="thumbnail">
+<p><a href="./posts/nb_007/index.html" class="no-external"></a></p><a href="./posts/nb_007/index.html" class="no-external">
+<p><img loading="lazy" src="./posts/nb_007/image.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/nb_007/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/nb_007/index.html" class="no-external">Column plot with World’s Telephones</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/nb_007/index.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('ggplot'); return false;">
+ggplot
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('visualization'); return false;">
+visualization
+</div>
+</div>
+<div class="listing-description">
+<a href="./posts/nb_007/index.html" class="no-external">In this blog post,I’ll make a simple column plot. A characteristic feature is that the values in the data have a large variance, which makes it difficult to compare them to…<code></code><code></code><code></code></a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/nb_007/index.html" class="no-external">
+<div class="listing-date">
+Oct 1, 2023
+</div>
+<div class="listing-author">
+Sean Ahn
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="4" data-categories="ggplot,visualization" data-listing-date-sort="1692975600000" data-listing-file-modified-sort="1695456926943" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1995">
+<div class="thumbnail">
+<p><a href="./posts/nb_006/index.html" class="no-external"></a></p><a href="./posts/nb_006/index.html" class="no-external">
+<p><img loading="lazy" src="./posts/nb_006/image.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/nb_006/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/nb_006/index.html" class="no-external">Line plot with CO2</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/nb_006/index.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('ggplot'); return false;">
+ggplot
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('visualization'); return false;">
+visualization
+</div>
+</div>
+<div class="listing-description">
+<a href="./posts/nb_006/index.html" class="no-external">In this blog post, I made line plot with CO2 dataset. CO2 dataset is groupedData. It’s very useful object when you make complicated dataset with formula.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/nb_006/index.html" class="no-external">
+<div class="listing-date">
+Aug 26, 2023
+</div>
+<div class="listing-author">
+Sean Ahn
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="5" data-categories="ggplot,visualization" data-listing-date-sort="1692975600000" data-listing-file-modified-sort="1693722511272" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1161">
+<div class="thumbnail">
+<p><a href="./posts/nb_002/index.html" class="no-external"></a></p><a href="./posts/nb_002/index.html" class="no-external">
+<p><img loading="lazy" src="./posts/nb_002/image.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/nb_002/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/nb_002/index.html" class="no-external">Bar Plot with morley</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/nb_002/index.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('ggplot'); return false;">
+ggplot
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('visualization'); return false;">
+visualization
+</div>
+</div>
+<div class="listing-description">
+<a href="./posts/nb_002/index.html" class="no-external">In this post we will plot a bar histogram using data from the Michelson experiment and discuss what colors should be used for colorblind people when plotting a bar…</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/nb_002/index.html" class="no-external">
+<div class="listing-date">
+Aug 26, 2023
+</div>
+<div class="listing-author">
+Sean Ahn
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="6" data-categories="ggplot,visualization" data-listing-date-sort="1692975600000" data-listing-file-modified-sort="1695435262061" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="880">
+<div class="thumbnail">
+<p><a href="./posts/nb_005/index.html" class="no-external"></a></p><a href="./posts/nb_005/index.html" class="no-external">
+<p><img loading="lazy" src="./posts/nb_005/image.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/nb_005/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/nb_005/index.html" class="no-external">Box plot with ToothGrowth</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/nb_005/index.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('ggplot'); return false;">
+ggplot
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('visualization'); return false;">
+visualization
+</div>
+</div>
+<div class="listing-description">
+<a href="./posts/nb_005/index.html" class="no-external">In this post, I’ve done a boxplot with ToothGrowth dataset. as you know, box plot is one of the most useful plot to visualize the dataset. But I don’t explain what box plot.…</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/nb_005/index.html" class="no-external">
+<div class="listing-date">
+Aug 26, 2023
+</div>
+<div class="listing-author">
+Sean Ahn
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="7" data-categories="ggplot,visualization" data-listing-date-sort="1692975600000" data-listing-file-modified-sort="1695213024062" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1111">
+<div class="thumbnail">
+<p><a href="./posts/nb_004/index.html" class="no-external"></a></p><a href="./posts/nb_004/index.html" class="no-external">
+<p><img loading="lazy" src="./posts/nb_004/image.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/nb_004/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/nb_004/index.html" class="no-external">Area plot with Nile</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/nb_004/index.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('ggplot'); return false;">
+ggplot
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('visualization'); return false;">
+visualization
+</div>
+</div>
+<div class="listing-description">
+<a href="./posts/nb_004/index.html" class="no-external">In this post, I’ll talk area plot with Nile dataset. as you know, Nile is one of the famous time series dataset.<br>
+sometimes, time series dataset is hard to give message to…<br></a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/nb_004/index.html" class="no-external">
+<div class="listing-date">
+Aug 26, 2023
+</div>
+<div class="listing-author">
+Sean Ahn
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="8" data-categories="ggplot,visualization" data-listing-date-sort="1692975600000" data-listing-file-modified-sort="1693727133352" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="946">
+<div class="thumbnail">
+<p><a href="./posts/nb_003/index.html" class="no-external"></a></p><a href="./posts/nb_003/index.html" class="no-external">
+<p><img loading="lazy" src="./posts/nb_003/image.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/nb_003/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/nb_003/index.html" class="no-external">Scatter plot with faithful</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/nb_003/index.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('ggplot'); return false;">
+ggplot
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('visualization'); return false;">
+visualization
+</div>
+</div>
+<div class="listing-description">
+<a href="./posts/nb_003/index.html" class="no-external">In this post, I’ll make scatter plot with trend line. Scatter plot display two variables on Cartesian coordinates.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/nb_003/index.html" class="no-external">
+<div class="listing-date">
+Aug 26, 2023
+</div>
+<div class="listing-author">
+Sean Ahn
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="9" data-categories="ggplot,visualization" data-listing-date-sort="1692370800000" data-listing-file-modified-sort="1693722512242" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1357">
+<div class="thumbnail">
+<p><a href="./posts/nb_001/index.html" class="no-external"></a></p><a href="./posts/nb_001/index.html" class="no-external">
+<p><img loading="lazy" src="./posts/nb_001/image.png" class="thumbnail-image"></p>
+</a><p><a href="./posts/nb_001/index.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/nb_001/index.html" class="no-external">Bar Plot with HairEyeColor</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/nb_001/index.html" class="no-external"></a>
+</div>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('ggplot'); return false;">
+ggplot
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('visualization'); return false;">
+visualization
+</div>
+</div>
+<div class="listing-description">
+<a href="./posts/nb_001/index.html" class="no-external">In this blog post, we’ll cover how to plot a bar plot with ggplot2. Bar plots are one of the most popular graphs because they can convey meaning simply and intuitively.</a>
+</div>
+</div>
+<div class="metadata">
+<a href="./posts/nb_001/index.html" class="no-external">
+<div class="listing-date">
+Aug 19, 2023
+</div>
+<div class="listing-author">
+Sean Ahn
+</div>
+</a>
+</div>
+</div>
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
