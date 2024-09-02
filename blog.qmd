@@ -1,5 +1,5 @@
 ---
-title: "My posts"
+title: "R Code"
 listing:
   contents: posts
   sort: "date desc"

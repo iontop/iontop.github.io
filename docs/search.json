@@ -2,16 +2,16 @@
   {
     "objectID": "blog.html",
     "href": "blog.html",
-    "title": "My posts",
+    "title": "R Code",
     "section": "",
     "text": "Strip plot with WorldPhones\n\n\n\n\n\n\nggplot\n\n\nvisualization\n\n\n\n\n\n\n\n\n\nJan 22, 2024\n\n\nSean Ahn\n\n\n\n\n\n\n\n\n\n\n\n\nLollipop plot with Islands\n\n\n\n\n\n\nggplot\n\n\nvisualization\n\n\n\n\n\n\n\n\n\nJan 21, 2024\n\n\nSean Ahn\n\n\n\n\n\n\n\n\n\n\n\n\nPyramid plot with ToothGrowth\n\n\n\n\n\n\nggplot\n\n\nvisualization\n\n\n\n\n\n\n\n\n\nOct 22, 2023\n\n\nSean Ahn\n\n\n\n\n\n\n\n\n\n\n\n\nColumn plot with World’s Telephones\n\n\n\n\n\n\nggplot\n\n\nvisualization\n\n\n\n\n\n\n\n\n\nOct 1, 2023\n\n\nSean Ahn\n\n\n\n\n\n\n\n\n\n\n\n\nLine plot with CO2\n\n\n\n\n\n\nggplot\n\n\nvisualization\n\n\n\n\n\n\n\n\n\nAug 26, 2023\n\n\nSean Ahn\n\n\n\n\n\n\n\n\n\n\n\n\nBar Plot with morley\n\n\n\n\n\n\nggplot\n\n\nvisualization\n\n\n\n\n\n\n\n\n\nAug 26, 2023\n\n\nSean Ahn\n\n\n\n\n\n\n\n\n\n\n\n\nBox plot with ToothGrowth\n\n\n\n\n\n\nggplot\n\n\nvisualization\n\n\n\n\n\n\n\n\n\nAug 26, 2023\n\n\nSean Ahn\n\n\n\n\n\n\n\n\n\n\n\n\nArea plot with Nile\n\n\n\n\n\n\nggplot\n\n\nvisualization\n\n\n\n\n\n\n\n\n\nAug 26, 2023\n\n\nSean Ahn\n\n\n\n\n\n\n\n\n\n\n\n\nScatter plot with faithful\n\n\n\n\n\n\nggplot\n\n\nvisualization\n\n\n\n\n\n\n\n\n\nAug 26, 2023\n\n\nSean Ahn\n\n\n\n\n\n\n\n\n\n\n\n\nBar Plot with HairEyeColor\n\n\n\n\n\n\nggplot\n\n\nvisualization\n\n\n\n\n\n\n\n\n\nAug 19, 2023\n\n\nSean Ahn\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Welcome",
+    "title": "blog",
     "section": "",
-    "text": "Hello!"
+    "text": "# introduce myself\nsean_ahn &lt;- data.frame(\n  code = c(\"I'm always eager to learn new things\", \"and explore the world 🌎 with data 📊!\")\n)\n\n\n# create dataframe for my interests\ninterests &lt;- data.frame(\n  activity = c(\"Data Visualization\", \"Scuba Diving 🤿\", \"Skiing 🎿\", \"Swimming 🏊\", \"Running 👟\"),\n  passion = c(5, 2, 4, 4, 4) # out of 5\n)\n\n\n# create dataframe for programming languages\nlanguages &lt;- data.frame(\n  language = c(\"R 👍\", \"Python 🐍\", \"Julia 😱\"),\n  proficiency = c(5, 4, 2) # out of 5\n)\n\n\n🚀🚀 git push –all –effort –always @ 2024 Sean Ahn"
   },
   {
     "objectID": "posts/nb_003/index.html",

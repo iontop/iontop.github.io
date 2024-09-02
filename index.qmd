@@ -1,9 +1,33 @@
 ---
-title: "Welcome"
-page-layout: full
-title-block-banner: true
+image: title.jpg
+about:
+  template: marquee
 ---
 
-# 
+```{r}
+# introduce myself
+sean_ahn <- data.frame(
+  code = c("I'm always eager to learn new things", "and explore the world 🌎 with data 📊!")
+)
 
-# Hello!
+```
+
+```{r}
+# create dataframe for my interests
+interests <- data.frame(
+  activity = c("Data Visualization", "Scuba Diving 🤿", "Skiing 🎿", "Swimming 🏊", "Running 👟"),
+  passion = c(5, 2, 4, 4, 4) # out of 5
+)
+
+```
+
+```{r}
+# create dataframe for programming languages
+languages <- data.frame(
+  language = c("R 👍", "Python 🐍", "Julia 😱"),
+  proficiency = c(5, 4, 2) # out of 5
+)
+
+```
+
+<p style="text-align: right; font-size: 12px; color: gray;">🚀🚀 git push --all --effort --always @ 2024 Sean Ahn </p>
