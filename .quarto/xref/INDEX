@@ -43,5 +43,65 @@
   },
   "blog.qmd": {
     "blog.html": "2fe0337f"
+  },
+  "posts/nb_002.qmd": {
+    "nb_002.html": "8f65c563"
+  },
+  "posts/nb_003.qmd": {
+    "nb_003.html": "bb3ce402"
+  },
+  "posts/nb_001.qmd": {
+    "nb_001.html": "0f3a1171"
+  },
+  "posts/nb_004.qmd": {
+    "nb_004.html": "e22d086e"
+  },
+  "posts/nb_010.qmd": {
+    "nb_010.html": "9f530669"
+  },
+  "posts/nb_005.qmd": {
+    "nb_005.html": "8bfff730"
+  },
+  "posts/nb_007.qmd": {
+    "nb_007.html": "31da9a8b"
+  },
+  "posts/nb_006.qmd": {
+    "nb_006.html": "5eae628d"
+  },
+  "posts/nb_008.qmd": {
+    "nb_008.html": "fbfa696a"
+  },
+  "posts/nb_009.qmd": {
+    "nb_009.html": "549aa613"
+  },
+  "backup/nb_008/index.qmd": {
+    "index.html": "539f00d2"
+  },
+  "backup/nb_006/index.qmd": {
+    "index.html": "ac2f1bfa"
+  },
+  "backup/nb_001/index.qmd": {
+    "index.html": "3bba2298"
+  },
+  "backup/nb_007/index.qmd": {
+    "index.html": "0ef411e6"
+  },
+  "backup/nb_009/index.qmd": {
+    "index.html": "9083cf8a"
+  },
+  "backup/nb_002/index.qmd": {
+    "index.html": "512661b5"
+  },
+  "backup/nb_005/index.qmd": {
+    "index.html": "610f5cd2"
+  },
+  "backup/nb_004/index.qmd": {
+    "index.html": "b2a893aa"
+  },
+  "backup/nb_003/index.qmd": {
+    "index.html": "718ce0e0"
+  },
+  "backup/nb_010/index.qmd": {
+    "index.html": "2da864e7"
   }
 }

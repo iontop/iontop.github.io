@@ -1,0 +1,231 @@
+---
+title: "Column plot with World's Telephones"
+author: "Sean Ahn"
+date: "2023-10-01"
+categories: [ggplot, visualization]
+image: "nb_007.png"
+---
+
+In this blog post, I'm going to make a simple column plot. A characteristic feature is that the values in the data have a large variance, which makes it difficult to compare them to each other. `ggplot` has a `facet_wrap()` function (or `facet_grid()`) for this purpose. 
+
+In fact, a [tile plot](https://informationisbeautiful.net/visualizations/the-billion-dollar-gram/) would be more appropriate in this case, but to keep the example as simple as possible, I'll plot without any data manipulation.
+
+## Initializing
+
+I usually use the following code for initialization. If you don't want to remove plots and/or variables, you can skip it.
+
+```{r}
+graphics.off()
+rm(list = ls())
+gc()
+
+```
+
+```{r}
+version
+```
+
+## Loading Useful Library
+
+We want to use as few packages (some might call them "libraries") as possible. If possible, I'm going to use only the **tidyverse** package. [Tidyverse](https://www.tidyverse.org) is one of the most famous packages in R programming, and it's really powerful and useful.
+
+```{r}
+library(tidyverse)
+
+```
+
+## Select Dataset
+
+When I write posts in my blog, I use the built-in dataset because I don't want the reader to suffer by having to find the data from somewhere else.
+
+The dataset I'll be using in this post is shown below `r emo::ji("down_arrow")` `r emo::ji("down_arrow")` `r emo::ji("down_arrow")`.
+
+<br>
+
+**The World's Telephones** 
+
+Description
+The number of telephones in various regions of the world (in thousands)
+
+Usage
+WorldPhones
+
+Format
+A matrix with 7 rows and 8 columns. The columns of the matrix give the figures for a given region, and the rows the figures for a year.
+
+The regions are: North America, Europe, Asia, South America, Oceania, Africa, Central America.
+
+The years are: 1951, 1956, 1957, 1958, 1959, 1960, 1961.
+
+Source
+AT&T (1961) The World's Telephones.
+
+References
+McNeil, D. R. (1977) Interactive Data Analysis. New York: Wiley.
+
+```{r}
+WorldPhones |> head()
+```
+
+WorldPhones dataset has several attributes as followings;  
+
+```{r}
+WorldPhones |> class()
+```
+
+and WorldPhones is 7 rows and 7 columns. it super tiny.  
+
+```{r}
+WorldPhones |> dim()
+```
+
+## Visualization
+
+oops, `autoplot` in `ggplot` does not support *matrix* object. there is lots of way to plot the matrix data.  
+
+but I want to use `ggplot` and `tidyverse` eco-system, so I'll convert matrix to dataframe.  
+
+it's quite easy. 
+
+```{r}
+df_base <- as.data.frame(WorldPhones)
+```
+
+```{r}
+head(df_base)
+```
+
+or I can use `as_tibble()` function. 
+
+```{r}
+df_dplyr <- as_tibble(WorldPhones, rownames = "Year")
+```
+
+```{r}
+head(df_dplyr)
+```
+
+both data frame looks very similar. but there is quite differences between them.  
+
+take a look dimension of data frame.  
+
+as you can see, data frame which generate with `as.data.frame()` is smaller than `dplyr` data frame.  
+
+WHY `r emo::ji("question")` 
+
+typically, 1st column of matrix role as *name of rows*.  when I convert matrix to data frame with `as.data.frame`, *name of rows* can not include as part of data frame.  
+
+sometimes, we need this data set should include part of data frame.   
+
+```{r}
+dim(df_base)
+```
+```{r}
+dim(df_dplyr)
+```
+
+For the purposes of this post, it is desirable that these rows are recorded as the first row of the data frame because their names refer to the year in which each piece of data was acquired.
+
+Anyway, I'll use data frame which generate with `as_tibble()` from here.  
+
+`Year` column is character type so I can change it to numeric type if I need. 
+
+Sometimes you need to assign `date` or `date_time` type on it depends on what will you do.  
+
+but in this blog post, I think it's not necessary so I just keep it as a character type.  
+
+
+```{r}
+# df_dplyr <- df_dplyr |> mutate(Year = (as.integer(Year))) # if you want to it makes integer type.
+
+df_dplyr
+
+```
+
+
+I'm going to plot the telephone supply in each continent by year, but the current data format makes it difficult to create the desired plot.
+
+so I transform data format with `pivot_longer()` function. 
+
+```{r}
+df <- pivot_longer(df_dplyr, 2:last_col(), names_to = "Region", values_to = "Numbers")
+
+head(df,10)
+```
+
+much better! `r emo::ji("+1")`  
+
+try to make a simple line plot.  
+
+```{r}
+df |> 
+  ggplot(aes(Year, Numbers, fill = Region)) + 
+  geom_col()
+```
+
+or...
+
+```{r}
+df |> 
+  ggplot(aes(Year, Numbers, fill = Region)) + 
+  geom_col(position = "dodge")
+  
+```
+
+There are some problems to read a line plot. first of all some of data values are too small (or too big), it's difficult to show change of data properly. 
+
+Typically, we manipulate data value before make plots depends on what you want to give message to readers. **"standardization"** or **"normalization"** is one of good example if you want to show change of values by year. **"logarithm"** also good method to show very large number and relatively small number simultaneously on the same plot. 
+
+You can search them and what they do. If you have statistic background, you can make better plot. 
+
+I'm going to create the plot in a simple way: I want to show the reader that the number of phones installed per region increases over time.
+
+Of course, there are a number of statistical data manipulations that can be done, such as the ones we talked about earlier, but for the sake of simplicity, I'll just use the data as it is.  
+
+So I used the `facet_warp()` function to split the plot by region.
+
+```{r}
+df |> 
+  ggplot(aes(Year, Numbers, fill = Region)) + 
+  geom_col(show.legend = FALSE) + 
+  facet_wrap(vars(Region))
+  
+```
+
+As you might expect, regions with smaller numbers are harder to detect changes in.  
+
+To help with this, `ggplot` has an option to scale each faceted plot differently.
+
+When I use `facet_warp()`, `scales` argument help to do it.
+
+```{r}
+df |> 
+  ggplot(aes(Year, Numbers, fill = Region)) + 
+  geom_col(position = "dodge", show.legend = FALSE) + 
+  facet_wrap(vars(Region), scales = "free_y" )
+```
+
+It looks better `r emo::ji("grin")`. 
+
+I then add extra stuff to decorate this plot.
+
+```{r}
+df |> 
+  ggplot(aes(Year, Numbers, fill = Region)) + 
+  geom_col(position = "dodge", show.legend = FALSE) + 
+  facet_wrap(vars(Region), scales = "free_y") +
+  labs(title = "The World's Telephones",
+       subtitle = "The number of telephones in various regions of the world (in thousands)",
+       x = "Year", y = "Number of Telephone") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+
+```{r include=FALSE}
+ggsave("nb_007.png")
+```
+
+<div class="right">
+__END OF POST__
+</div>
