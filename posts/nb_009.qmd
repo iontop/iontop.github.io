@@ -12,11 +12,11 @@ When displaying a large number of datasets in a bar plot or line plot, it is dif
 
 if you read more information, refer to followings;   
 
-https://www.highcharts.com/docs/chart-and-series-types/lollipop-series    
+[Ref.1 - highcharts.com](https://www.highcharts.com/docs/chart-and-series-types/lollipop-series)    
 
-https://datavizproject.com/data-type/lollipop-chart/  
+[Ref.2 - datavizproject.com](https://datavizproject.com/data-type/lollipop-chart/)
 
-https://towardsdatascience.com/lollipop-charts-2f748b90f6f0   
+[Ref.3 - towardsdatascience.com](https://towardsdatascience.com/lollipop-charts-2f748b90f6f0)
 
 
 
