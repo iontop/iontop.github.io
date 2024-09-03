@@ -333,14 +333,14 @@
     "href": "posts/nb_009.html",
     "title": "Lollipop plot with Islands",
     "section": "",
-    "text": "When displaying a large number of datasets in a bar plot or line plot, it is difficult to distinguish between the data due to the phenomenon of overlapping lines.\nA lollipop plot is an effective plot to alleviate this phenomenon.\nif you read more information, refer to followings;"
+    "text": "When displaying a large number of datasets in a bar plot or line plot, it is difficult to distinguish between the data due to the phenomenon of overlapping lines.\nA lollipop plot is an effective plot to alleviate this phenomenon.\nif you read more information, refer to followings;\nRef.1 - highcharts.com\nRef.2 - datavizproject.com\nRef.3 - towardsdatascience.com"
   },
   {
     "objectID": "posts/nb_009.html#initializing",
     "href": "posts/nb_009.html#initializing",
     "title": "Lollipop plot with Islands",
     "section": "Initializing",
-    "text": "Initializing\nI usually use the following code for initialization. If you don’t want to remove plots and/or variables, you can skip it.\n\ngraphics.off()\nrm(list = ls())\ngc()\n\n          used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)\nNcells  601767 32.2    1369207 73.2         NA   700254 37.4\nVcells 1110568  8.5    8388608 64.0      16384  1963377 15.0\n\n\n\nversion\n\n               _                           \nplatform       aarch64-apple-darwin20      \narch           aarch64                     \nos             darwin20                    \nsystem         aarch64, darwin20           \nstatus                                     \nmajor          4                           \nminor          4.0                         \nyear           2024                        \nmonth          04                          \nday            24                          \nsvn rev        86474                       \nlanguage       R                           \nversion.string R version 4.4.0 (2024-04-24)\nnickname       Puppy Cup"
+    "text": "Initializing\nI usually use the following code for initialization. If you don’t want to remove plots and/or variables, you can skip it.\n\ngraphics.off()\nrm(list = ls())\ngc()\n\n          used (Mb) gc trigger (Mb) limit (Mb) max used (Mb)\nNcells  601756 32.2    1369178 73.2         NA   700248 37.4\nVcells 1110450  8.5    8388608 64.0      16384  1963253 15.0\n\n\n\nversion\n\n               _                           \nplatform       aarch64-apple-darwin20      \narch           aarch64                     \nos             darwin20                    \nsystem         aarch64, darwin20           \nstatus                                     \nmajor          4                           \nminor          4.0                         \nyear           2024                        \nmonth          04                          \nday            24                          \nsvn rev        86474                       \nlanguage       R                           \nversion.string R version 4.4.0 (2024-04-24)\nnickname       Puppy Cup"
   },
   {
     "objectID": "posts/nb_009.html#loading-useful-library",
