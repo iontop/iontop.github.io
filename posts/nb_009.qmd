@@ -19,7 +19,6 @@ if you read more information, refer to followings;
 [Ref.3 - towardsdatascience.com](https://towardsdatascience.com/lollipop-charts-2f748b90f6f0)
 
 
-
 ## Initializing
 
 I usually use the following code for initialization. If you don't want to remove plots and/or variables, you can skip it.
