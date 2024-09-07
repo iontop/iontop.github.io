@@ -3,7 +3,7 @@ title: "Area plot with Nile"
 author: "Sean Ahn"
 date: "2023-08-26"
 categories: [ggplot, visualization]
-image: "image.png"
+image: "nb_004.png"
 ---
 
 In this post, I'll talk area plot with Nile dataset. as you know, Nile is one of the famous time series dataset.   
