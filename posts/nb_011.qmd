@@ -110,7 +110,7 @@ You can also use the `for()` function to create multiple plots showing the distr
 We're going to find a way to make it work.  
 
 ```{r}
-# Tree별로 히스토그램 생성
+# Plot historam by Trees
 unique_species <- unique(df$Species)
 
 for (species in unique_species) {
